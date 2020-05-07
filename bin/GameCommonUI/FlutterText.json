@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":143,"runtime":"Application/GameCommon/widget/FlutterText.ts","height":80},"compId":2,"child":[{"type":"Text","props":{"var":"number_text","valign":"middle","text":"text","name":"number_text","fontSize":80,"color":"#ff0000","bold":true,"align":"center","runtime":"laya.display.Text"},"compId":3}],"loadList":[],"loadList3D":[]}

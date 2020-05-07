@@ -1,0 +1,9 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nimport base from \"../../base/base\";\r\nimport Chip from \"../GameCommon/widget/Chip\";\r\nvar Event = Laya.Event;\r\nexport default class HundredsBull extends ui.GameHundredsBull.HundredsBullUI {\r\n    constructor() {\r\n        super();\r\n        this.BetArr = [10, 20, 50, 100, 200];\r\n    }\r\n    onAwake() {\r\n        for (let i = 0; i < 4; i++) {\r\n            let recv = this[`recvPanel_${i}`];\r\n            recv.on(Event.MOUSE_MOVE, this, () => {\r\n                this.userChip(this.bet_view.getCurBetPos(), recv);\r\n            });\r\n            this.bet_view.setBets([10, 20, 50, 100, 200]);\r\n        }\r\n    }\r\n    userChip(userPos, recv) {\r\n        let chip = new Chip();\r\n        let index = this.bet_view.getCurBet();\r\n        chip.gold.loadImage(`GameCommon/HandredsBet/${this.bet_view.getCurBet()}.png`);\r\n        let text = new Laya.Text();\r\n        text.text = this.BetArr[index] + '';\r\n        text.fontSize = 20;\r\n        text.color = \"#fff\";\r\n        text.align = \"center\";\r\n        chip.gold.addChild(text);\r\n        chip.x = userPos.x - recv.x;\r\n        chip.y = userPos.y - recv.y;\r\n        recv.addChild(chip);\r\n        chip.toTargerShow(base.publicFun.getRecvPos(recv), null);\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/majiang/src/base/base.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Chip.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/HundredBet.ts"
+  ]
+}

@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":1920,"runtime":"Application/GameCommon/widget/TransAni.ts","height":1080},"compId":2,"child":[{"type":"Sprite","props":{"y":344,"x":609.5,"var":"image","texture":"GameCommon/BetStatus/Game_Common_HintGamesStart.png","name":"image"},"compId":3}],"loadList":["GameCommon/BetStatus/Game_Common_HintGamesStart.png"],"loadList3D":[]}

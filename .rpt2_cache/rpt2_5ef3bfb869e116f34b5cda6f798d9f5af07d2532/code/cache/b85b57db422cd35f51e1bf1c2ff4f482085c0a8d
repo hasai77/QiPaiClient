@@ -1,0 +1,8 @@
+{
+  "code": "export default class UserPropList extends Laya.Sprite {\r\n    constructor() {\r\n        super();\r\n    }\r\n    onAwake() {\r\n        this.prop_list = this.getChildByName(\"prop_list\");\r\n        this.userInfo = this.getChildByName(\"userInfo\");\r\n        this.banker = this.getChildByName(\"Banker\");\r\n        this.flicker = this.getChildByName(\"Flicker\");\r\n        this.betNum_image = this.getChildByName(\"betNum_image\");\r\n    }\r\n    get curtDealPos() {\r\n        return this.prop_list.curDealPos;\r\n    }\r\n    Init() {\r\n        this.prop_list.initCard();\r\n        this.hideBet();\r\n    }\r\n    recvCard(number) {\r\n        this.prop_list.recvCard(number);\r\n    }\r\n    showProp(list, how) {\r\n        this.prop_list.propCard(list);\r\n    }\r\n    setOnLine(ison) {\r\n        this.userInfo.onLine = ison;\r\n    }\r\n    setHeader(image) {\r\n        this.userInfo.avatarFrame = image;\r\n    }\r\n    setUserName(name) {\r\n        this.userInfo.nickName = name;\r\n    }\r\n    showReady(show) {\r\n        this.userInfo.ready = show;\r\n    }\r\n    setBanker(isbanker) {\r\n        this.banker.active = isbanker;\r\n    }\r\n    showBet(num) {\r\n        this.betNum_image.visible = true;\r\n        this.betNum_image.loadImage(`GameCommon/BetNumber/Game_Common_Bet_${num}.png`);\r\n    }\r\n    hideBet() {\r\n        this.betNum_image.visible = false;\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/PropList.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/User.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Flicker.ts"
+  ]
+}

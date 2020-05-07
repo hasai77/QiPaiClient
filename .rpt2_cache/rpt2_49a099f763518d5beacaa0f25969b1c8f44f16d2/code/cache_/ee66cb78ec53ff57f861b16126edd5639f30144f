@@ -1,0 +1,6 @@
+{
+  "code": "import { ui } from \"../../../../ui/layaMaxUI\";\r\nvar Handler = Laya.Handler;\r\nvar Tween = Laya.Tween;\r\nexport default class Chip extends ui.GameCommonUI.Athletics.ChipUI {\r\n    constructor() {\r\n        super();\r\n    }\r\n    toTargerShow(target, compFunc) {\r\n        Tween.to(this, { x: target.x, y: target.y }, 300, null, Handler.create(this, () => {\r\n            Tween.to(this, { scaleX: 1.1, scaleY: 1.1 }, 300, null, Handler.create(this, () => {\r\n                Tween.to(this, { scaleX: 1, scaleY: 1 }, 300, null, Handler.create(this, () => {\r\n                    compFunc && compFunc();\r\n                }));\r\n            }));\r\n        }));\r\n    }\r\n    toTargerHide(target) {\r\n        Tween.to(this, { x: target.x, y: target.y }, 300, null, Handler.create(this, () => {\r\n            this.removeSelf();\r\n        }));\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "code": "import { ui } from \"../../../ui/layaMaxUI\";\r\nexport default class FlutterText extends ui.GameCommonUI.FlutterTextUI {\r\n    constructor(text) {\r\n        super();\r\n        this.text = text;\r\n    }\r\n    onAwake() {\r\n        this.number_text.text = this.text;\r\n    }\r\n    startAni() {\r\n        Laya.Tween.to(this, { y: this.y - 150, alpha: 0 }, 1500, null, Laya.Handler.create(this, () => {\r\n            this.removeSelf();\r\n        }));\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts"
+  ]
+}

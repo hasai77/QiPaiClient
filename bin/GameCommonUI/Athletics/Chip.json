@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":50,"runtime":"Application/GameCommon/widget/Chip.ts","height":52},"compId":2,"child":[{"type":"Sprite","props":{"y":2,"x":0,"width":50,"var":"gold","texture":"GameCommon/Game_Common_UI_Gold.png","name":"gold","height":50},"compId":3}],"loadList":["GameCommon/Game_Common_UI_Gold.png"],"loadList3D":[]}

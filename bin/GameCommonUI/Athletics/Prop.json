@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":147,"runtime":"Application/GameCommon/widget/Prop.ts","height":188},"compId":2,"child":[{"type":"Sprite","props":{"y":94,"x":72,"width":147,"var":"card","texture":"GameCommon/Props/-1.png","skewY":0,"skewX":0,"pivotY":94,"pivotX":72,"name":"card","height":188},"compId":3}],"loadList":["GameCommon/Props/-1.png"],"loadList3D":[]}

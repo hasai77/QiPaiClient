@@ -1,0 +1,25 @@
+{
+    "x":0,
+    "type":"View",
+    "selectedBox":2,
+    "searchKey":"View",
+    "props":{"width":1920,"sceneColor":"#000000","runtime":"Application/GameCommon/widget/Deal.ts","height":1080},
+    "nodeParent":-1,
+    "maxID":3,
+    "label":"View",
+    "isDirectory":false,
+    "isAniNode":true,
+    "hasChild":false,
+    "compId":2,
+    "child":[
+        ],
+    "animations":[
+        {
+            "nodes":[
+                ],
+            "name":"ani1",
+            "id":1,
+            "frameRate":24,
+            "action":0
+        }]
+}

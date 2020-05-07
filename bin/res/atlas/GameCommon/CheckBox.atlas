@@ -1,0 +1,1 @@
+{"frames":{"Selected.png":{"frame":{"h":67,"idx":0,"w":67,"x":0,"y":0},"sourceSize":{"h":67,"w":67},"spriteSourceSize":{"x":0,"y":0}},"Unselected.png":{"frame":{"h":67,"idx":0,"w":67,"x":68,"y":0},"sourceSize":{"h":67,"w":67},"spriteSourceSize":{"x":0,"y":0}}},"meta":{"image":"CheckBox.png","prefix":"GameCommon/CheckBox/"}}

@@ -1,0 +1,18 @@
+[
+  {
+    "flatMessage": "Cannot find module '../Game/Common/Game/Prop'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts\u001b[0m:\u001b[93m2\u001b[0m:\u001b[93m18\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../Game/Common/Game/Prop'.\r\n\r\n\u001b[7m2\u001b[0m import Prop from \"../Game/Common/Game/Prop\"\r\n\u001b[7m \u001b[0m \u001b[91m                 ~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts\u001b[0m:\u001b[93m3\u001b[0m:\u001b[93m22\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../Game/Common/Game/PropList'.\r\n\r\n\u001b[7m3\u001b[0m import PropList from \"../Game/Common/Game/PropList\"\r\n\u001b[7m \u001b[0m \u001b[91m                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2307,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts(2,18)"
+  },
+  {
+    "flatMessage": "Cannot find module '../Game/Common/Game/PropList'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts\u001b[0m:\u001b[93m2\u001b[0m:\u001b[93m18\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../Game/Common/Game/Prop'.\r\n\r\n\u001b[7m2\u001b[0m import Prop from \"../Game/Common/Game/Prop\"\r\n\u001b[7m \u001b[0m \u001b[91m                 ~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts\u001b[0m:\u001b[93m3\u001b[0m:\u001b[93m22\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../Game/Common/Game/PropList'.\r\n\r\n\u001b[7m3\u001b[0m import PropList from \"../Game/Common/Game/PropList\"\r\n\u001b[7m \u001b[0m \u001b[91m                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2307,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/majiang/src/Application/Hall/Hall.ts(3,22)"
+  }
+]

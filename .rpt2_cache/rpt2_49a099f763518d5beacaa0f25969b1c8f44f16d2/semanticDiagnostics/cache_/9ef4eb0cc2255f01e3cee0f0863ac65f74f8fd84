@@ -1,0 +1,18 @@
+[
+  {
+    "flatMessage": "Property 'curtDealPos' does not exist on type 'User'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts\u001b[0m:\u001b[93m27\u001b[0m:\u001b[93m24\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'curtDealPos' does not exist on type 'User'.\r\n\r\n\u001b[7m27\u001b[0m         let pos = user.curtDealPos()\r\n\u001b[7m  \u001b[0m \u001b[91m                       ~~~~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts\u001b[0m:\u001b[93m29\u001b[0m:\u001b[93m18\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'recvCard' does not exist on type 'User'.\r\n\r\n\u001b[7m29\u001b[0m             user.recvCard(card.prop_Number)\r\n\u001b[7m  \u001b[0m \u001b[91m                 ~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2339,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts(27,24)"
+  },
+  {
+    "flatMessage": "Property 'recvCard' does not exist on type 'User'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts\u001b[0m:\u001b[93m27\u001b[0m:\u001b[93m24\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'curtDealPos' does not exist on type 'User'.\r\n\r\n\u001b[7m27\u001b[0m         let pos = user.curtDealPos()\r\n\u001b[7m  \u001b[0m \u001b[91m                       ~~~~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts\u001b[0m:\u001b[93m29\u001b[0m:\u001b[93m18\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'recvCard' does not exist on type 'User'.\r\n\r\n\u001b[7m29\u001b[0m             user.recvCard(card.prop_Number)\r\n\u001b[7m  \u001b[0m \u001b[91m                 ~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2339,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Deal.ts(29,18)"
+  }
+]

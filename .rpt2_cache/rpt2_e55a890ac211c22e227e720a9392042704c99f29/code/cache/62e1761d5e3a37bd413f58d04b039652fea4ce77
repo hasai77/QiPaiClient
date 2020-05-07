@@ -1,0 +1,9 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nvar Event = Laya.Event;\r\nexport default class Hall extends ui.HallUI {\r\n    constructor() {\r\n        super();\r\n    }\r\n    onAwake() {\r\n        this.card = this.getChildByName(\"card\");\r\n        this.market.on(Event.CLICK, this, this.onClickButton);\r\n        this.combat.on(Event.CLICK, this, this.onClickCombat);\r\n    }\r\n    onClickButton() {\r\n    }\r\n    onClickCombat() {\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Prop.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/PropList.ts",
+    "C:/Users/Administrator/Documents/majiang/src/Application/GameCommon/widget/Button.ts"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "code": "export default class BetButton extends Laya.Script {\r\n    constructor() {\r\n        super();\r\n        this.backRes = \"\";\r\n        this.btnText = \"\";\r\n    }\r\n    onAwake() {\r\n        let btnBack = this.owner.getChildByName(\"btnBack\");\r\n        let btnText = this.owner.getChildByName(\"btnText\");\r\n        if (this.backRes)\r\n            btnBack.loadImage(this.backRes);\r\n        if (this.btnText)\r\n            btnText.text = this.btnText;\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts"
+  ]
+}

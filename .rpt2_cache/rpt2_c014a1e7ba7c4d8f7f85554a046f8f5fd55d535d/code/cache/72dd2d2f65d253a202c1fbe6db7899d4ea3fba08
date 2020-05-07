@@ -1,0 +1,7 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nvar Event = Laya.Event;\r\nimport base from \"../../base/base\";\r\nexport default class InvitationCode extends ui.Hall.InvitationCodeUI {\r\n    constructor(code) {\r\n        super();\r\n        this.code = code;\r\n    }\r\n    onAwake() {\r\n        this.code_text.value = this.code;\r\n        this.copy_btn.on(Event.CLICK, this, () => {\r\n            console.log(12312);\r\n            base.publicFun.showTaost(\"复制成功\");\r\n            base.publicFun.hideAlert(this, () => { this.removeSelf(); });\r\n        });\r\n        this.cancel_btn.on(Event.CLICK, this, () => {\r\n            base.publicFun.hideAlert(this, () => { this.removeSelf(); });\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/majiang/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/majiang/src/base/base.ts"
+  ]
+}

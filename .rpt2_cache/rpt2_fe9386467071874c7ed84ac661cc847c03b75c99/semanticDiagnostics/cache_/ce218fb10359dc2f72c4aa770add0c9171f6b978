@@ -1,0 +1,10 @@
+[
+  {
+    "flatMessage": "Cannot find module './D:/LayaAirIDE_beta/resources/app/out/vs/layaEditor/src/Application/GameCommon/widget/BetButton'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/majiang/src/GameConfig.ts\u001b[0m:\u001b[93m11\u001b[0m:\u001b[93m23\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './D:/LayaAirIDE_beta/resources/app/out/vs/layaEditor/src/Application/GameCommon/widget/BetButton'.\r\n\r\n\u001b[7m11\u001b[0m import BetButton from \"./D:/LayaAirIDE_beta/resources/app/out/vs/layaEditor/src/Application/GameCommon/widget/BetButton\"\r\n\u001b[7m  \u001b[0m \u001b[91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2307,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/majiang/src/GameConfig.ts(11,23)"
+  }
+]
