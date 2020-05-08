@@ -4,13 +4,15 @@ import UserPropList from "./UserPropList"
 import Base from "../../../base/base"
 import Handler = Laya.Handler;
 import Tween = Laya.Tween;
+import PropModel from "../Model/PropModel";
+import UserInfoModel from "../Model/UserInfoModel";
 export default class Deal extends ui.GameCommonUI.Athletics.DealUI {
     constructor() {
         super()
     }
     private dealIndex: number;
-    private propDataArr: Application.GameCommonModel.Prop[];
-    public startDeal(userList: any[], total, userInfoList?: Array<Application.GameCommonModel.UserInfo>): void {
+    private propDataArr: PropModel[];
+    public startDeal(userList: any[], total, userInfoList?: Array<UserInfoModel>): void {
         this.visible = true;
         let leng = userList.length;
         this.dealIndex = 0;

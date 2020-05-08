@@ -1,5 +1,3 @@
-namespace Lib {
-    export class AnimationUtil {
+export default class AnimationUtil {
 
-    }
 }

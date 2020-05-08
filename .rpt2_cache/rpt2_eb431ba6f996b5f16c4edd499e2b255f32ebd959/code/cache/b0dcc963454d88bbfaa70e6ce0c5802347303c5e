@@ -1,0 +1,11 @@
+{
+  "code": "import accountLogin from \"./accountLogin\";\r\nimport wachatLogin from \"./wachatLogin\";\r\nimport { ui } from \"../../ui/layaMaxUI\";\r\nvar Event = Laya.Event;\r\nimport publicfun from \"../../base/publicfun\";\r\nexport default class Login extends ui.Login.LoginUI {\r\n    constructor() {\r\n        super();\r\n    }\r\n    onAwake() {\r\n        this.accountLogin_btn.on(Event.CLICK, this, () => {\r\n            publicfun.showAlert(this.addChild(new accountLogin()));\r\n        });\r\n        this.QQLogin_btn.on(Event.CLICK, this, () => {\r\n        });\r\n        this.chatLogin_btn.on(Event.CLICK, this, () => {\r\n            publicfun.showAlert(this.addChild(new wachatLogin()));\r\n        });\r\n        this.quickLogin_btn.on(Event.CLICK, this, () => {\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/Login/accountLogin.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/Login/forgetPass.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/Login/rigisteraccount.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/Login/wachatLogin.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/publicfun.ts"
+  ]
+}

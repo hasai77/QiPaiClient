@@ -1,7 +1,5 @@
-namespace Common {
-    module AthleticsGame {
-        class AthleticsGameVersus_Common  extends Application.Game.GameEventModel{
+import GameEventModel from "../../GameCommon/Model/GameEventModel";
 
-        }
-    }
+export default class AthleticsGameVersus_Common  extends GameEventModel{
+
 }

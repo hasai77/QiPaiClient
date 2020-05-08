@@ -1,16 +1,13 @@
-import base from "../../../base/base";
+
 import { ui } from "../../../ui/layaMaxUI";
+import GameEventModel from "../../GameCommon/Model/GameEventModel";
+import base from "../../../base/base";
 
-namespace Common {
-    module AthleticsGame {
-       
-        class AthleticsGameOver_Common  extends Application.Game.GameEventModel{
-            view(GameID:string){
-                //removeListener
+export default class BullGameOver_Common  extends GameEventModel{
+    view(GameID:string){
+        //removeListener
 
-                base.sceneManager.changeScene("Hall",new ui.APP_LoadingUI())
-                
-            }
-        }
+        base.sceneManager.changeScene("Hall",new ui.APP_LoadingUI())
+        
     }
 }

@@ -1,5 +1,3 @@
-namespace Lib {
-    export class EventManage {
+export default class EventManage {
 
-    }
 }

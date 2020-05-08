@@ -1,5 +1,3 @@
-namespace Lib {
-    export class ChessAnimationUtil {
+export default class ChessAnimationUtil {
 
-    }
 }

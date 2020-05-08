@@ -14,10 +14,13 @@ import Recharge from "./Recharge/Recharge";
 import CommonCreatRoom from "../GameCommonUI/CommonCreatRoom";
 import ImageList from "../../config/gameTypeImages"
 import ActionButton from "../GameCommon/widget/Button";
+import BullGameBet from "../GameAthleticsBull/Event/BullGameBet";
 export default class Hall extends ui.Hall.HallUI{
     
     constructor(){
         super()
+        
+        new BullGameBet("GameCommon/CreateGame",<any>this)
     }
     onAwake():void{
         this.icon_list.hScrollBarSkin = "";

@@ -1,0 +1,10 @@
+{
+  "code": "import network from \"./network\";\r\nimport PublicFun from \"./public\";\r\nimport SceneManager from \"./sceneManager\";\r\nimport userInfoData from \"./userInfoData\";\r\nimport SnedNet from \"./SnedNet\";\r\nclass base {\r\n    constructor() {\r\n        this.netWork = network.getinstance();\r\n        this.publicFun = PublicFun.getinstance();\r\n        this.sceneManager = SceneManager.getinstance();\r\n        this.userInfo = userInfoData.getinstance();\r\n        this.sendNet = SnedNet.getinstance();\r\n    }\r\n    static getinstance() {\r\n        if (this.instance == null)\r\n            this.instance = new base();\r\n        return this.instance;\r\n    }\r\n}\r\nexport default base.getinstance();\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/network.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/public.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/sceneManager.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/userInfoData.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/SnedNet.ts"
+  ]
+}

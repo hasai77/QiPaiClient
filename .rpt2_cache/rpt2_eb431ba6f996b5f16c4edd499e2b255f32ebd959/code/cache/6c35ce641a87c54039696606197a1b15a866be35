@@ -1,0 +1,6 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nexport default class CommonPopup extends ui.Common.PopUpUI {\r\n    constructor(str, callBack) {\r\n        super();\r\n        this.callBack = callBack;\r\n    }\r\n    setText(str) {\r\n        this.msg_text.text = str;\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/ui/layaMaxUI.ts"
+  ]
+}

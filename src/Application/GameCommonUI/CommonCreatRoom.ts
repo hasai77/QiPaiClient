@@ -18,6 +18,7 @@ import TwoEightroomRule = ui.GameAthleticsTwoEight.Rules.TwoEightroomRuleUI;
 import Base from "../../base/base"
 import CommonRadioGroup from "../GameCommon/widget/CommonRadioGroup"
 import CommonCheck from "../GameCommon/widget/CommonCheck"
+import base from "../../base/base";
 export default class CommonCreatRoom extends ui.GameCommonUI.CommonCreatRoomUI {
     constructor() {
         super()
@@ -52,6 +53,12 @@ export default class CommonCreatRoom extends ui.GameCommonUI.CommonCreatRoomUI {
                     data.checks.push(checked)
                 }
             }
+            base.sendNet.sendCreatGame({
+                "MaxUser": 6,
+                "MinUser": 2,
+                "GamePlaying": "Bull.Max",
+                "BaseScore": 1
+            })
             console.log(data)
         })
         this.tabButtons_list.selectEnable = true;

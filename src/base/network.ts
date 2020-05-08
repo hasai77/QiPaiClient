@@ -1,3 +1,5 @@
+import BaseConfig from "../config/BaseConfig";
+
 export default class network {
 
     private socket: Laya.Socket;
@@ -10,24 +12,15 @@ export default class network {
             this.instance = new network();
         return this.instance;
     }
-    private addNetEvent(type: any, handler: Function): void {
+    public addNetEvent(type: any, handler: Function): void {
         this.types[type] = handler
+        console.log(this.types)
     }
-    private removeEvent(type: any): void {
+    public removeEvent(type: any): void {
         if (this.types[type])
             delete this.types[type]
     }
-    public register(type: string, ui: any, caller: Application.Game.GameEventModel): void {
-        // this.addNetEvent(type + "init", caller.GameEventLoadInitialization);
-        // this.addNetEvent(type + "enter", caller.GameEventEnter);
-        // this.addNetEvent(type + "leave", caller.GameEventLeave);
-    }
-    
-    public unregister(type: string):void{
-        this.removeEvent(type+"init");
-        this.removeEvent(type+"enter");
-        this.removeEvent(type+"leave");
-    }
+  
 
     constructor() {
         this.types = {};
@@ -42,7 +35,7 @@ export default class network {
         
     }
     public connect(): void {
-        this.socket.connectByUrl("ws://localhost:8989");
+        this.socket.connectByUrl(BaseConfig.socket);
         this.socket.on(Laya.Event.OPEN, this, this.openHandler);
         this.socket.on(Laya.Event.MESSAGE, this, this.receiveHandler);
         this.socket.on(Laya.Event.CLOSE, this, this.closeHandler);
@@ -50,12 +43,13 @@ export default class network {
     }
     private openHandler(event: any = null): void {
         //正确建立连接；
+        console.log("链接成功")
         Laya.timer.frameLoop(1,this,()=>{
-         
             if(!this.types||this.eList.length == 0)
             return;
             while(this.eList.length){
-                this.types[this.eList[0]];
+                let msg = this.eList[0];
+                this.types[msg.Name](msg.Data);
                 this.eList.shift()
             }
         })
@@ -63,16 +57,25 @@ export default class network {
     private receiveHandler(msg: any = null): void {
         ///接收到数据触发函数
         console.log(msg)
-        this.eList.push(msg)
-    }
+        let data = JSON.parse(msg)
+        console.log(data)
+        this.eList.push(data)
+    } 
     private closeHandler(e: any = null): void {
         //关闭事件
+        console.log("close",e)
     }
     private errorHandler(e: any = null): void {
         //连接出错
+        console.log("error",e)
     }
 
     public sendMsg(type: any, data: any): void {
-
+        let sData  = {
+            name:type,
+            Data:data
+        }
+        console.log(sData)
+        this.socket.send(JSON.stringify(sData));
     }
 }

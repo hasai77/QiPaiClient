@@ -1,7 +1,5 @@
-namespace Common {
-    export module HundredGame {
-        export class HundredGameStart_Common  extends Application.Game.GameEventModel{
+import GameEventModel from "../../GameCommon/Model/GameEventModel";
 
-        }
-    }
+export default class HundredGameStart_Common  extends GameEventModel{
+
 }

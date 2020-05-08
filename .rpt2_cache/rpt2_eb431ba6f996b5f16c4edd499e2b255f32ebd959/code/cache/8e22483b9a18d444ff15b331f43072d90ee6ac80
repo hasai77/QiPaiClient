@@ -1,0 +1,6 @@
+{
+  "code": "import publicfun from \"../../../base/publicfun\";\r\nexport default class CommonProgress extends Laya.Sprite {\r\n    constructor() {\r\n        super();\r\n        this.m_percent = 0;\r\n    }\r\n    get percent() {\r\n        return this.m_percent;\r\n    }\r\n    set percent(perc) {\r\n        this.m_percent = perc > 100 ? 100 : perc;\r\n        this.imgmask.width = this.width / 100 * this.m_percent + 1;\r\n        this.icon.x = this.imgmask.width;\r\n        this.changeHandler(this.m_percent);\r\n    }\r\n    changeHandler(percent) {\r\n    }\r\n    onAwake() {\r\n        this.bar = this.getChildByName(\"bar\");\r\n        this.icon = this.getChildByName(\"icon\");\r\n        publicfun.setCenter(this.icon);\r\n        this.imgmask = this.bar.mask;\r\n        this.on(Laya.Event.MOUSE_DOWN, this, (e) => {\r\n            let perc = e.target.mouseX / this.width * 100;\r\n            let func = perc > 99 ? Math.ceil : Math.floor;\r\n            this.percent = func(perc);\r\n        });\r\n        this.on(Laya.Event.MOUSE_MOVE, this, (e) => {\r\n            let perc = e.target.mouseX / this.width * 100;\r\n            let func = perc > 99 ? Math.ceil : Math.floor;\r\n            this.percent = func(perc);\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/publicfun.ts"
+  ]
+}

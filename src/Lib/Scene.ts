@@ -1,5 +1,3 @@
-namespace Lib {
-    export class Scene {
+export default class Scene {
 
-    }
 }

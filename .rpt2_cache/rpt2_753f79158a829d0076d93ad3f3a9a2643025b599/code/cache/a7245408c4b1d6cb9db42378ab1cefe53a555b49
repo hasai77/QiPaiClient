@@ -1,0 +1,7 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nimport Base from \"../../base/base\";\r\nvar Event = Laya.Event;\r\nexport default class Rule extends ui.GameHundredsBenzBmw.RuleUI {\r\n    constructor() {\r\n        super();\r\n    }\r\n    onAwake() {\r\n        this.close_btn.on(Event.CLICK, this, () => {\r\n            Base.publicFun.hideAlert(this);\r\n        });\r\n        this.confirm_btn.on(Event.CLICK, this, () => {\r\n            Base.publicFun.hideAlert(this);\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/base.ts"
+  ]
+}

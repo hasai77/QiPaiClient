@@ -3,7 +3,7 @@ import CommonProgress from "./Application/GameCommon/widget/CommonProgress"
 import CommonPopup from "./Application/GameCommonUI/CommonPopup"
 import Button from "./Application/GameCommon/widget/Button"
 import CommonToast from "./Application/GameCommonUI/CommonToast"
-import BullGame from "./Application/GameAthleticsBull/Event/BullGame"
+import AthleticsBullGame from "./Application/GameAthleticsBull/AthleticsBullGame"
 import UserPropList from "./Application/GameCommon/widget/UserPropList"
 import User from "./Application/GameCommon/widget/User"
 import Flicker from "./Application/GameCommon/widget/Flicker"
@@ -67,7 +67,7 @@ export default class GameConfig{
     static screenMode:string="none";
     static alignV:string="top";
     static alignH:string="left";
-    static startScene:any="GameAthleticsBull/BullGame.scene";
+    static startScene:any="Hall/Hall.scene";
     static sceneRoot:string="";
     static debug:boolean=false;
     static stat:boolean=false;
@@ -80,7 +80,7 @@ export default class GameConfig{
         reg("Application/GameCommonUI/CommonPopup.ts",CommonPopup);
         reg("Application/GameCommon/widget/Button.ts",Button);
         reg("Application/GameCommonUI/CommonToast.ts",CommonToast);
-        reg("Application/GameAthleticsBull/Event/BullGame.ts",BullGame);
+        reg("Application/GameAthleticsBull/AthleticsBullGame.ts",AthleticsBullGame);
         reg("Application/GameCommon/widget/UserPropList.ts",UserPropList);
         reg("Application/GameCommon/widget/User.ts",User);
         reg("Application/GameCommon/widget/Flicker.ts",Flicker);

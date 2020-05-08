@@ -1,3 +1,5 @@
-export default class HundredGameThan_Common  extends Application.Game.GameEventModel{
+import GameEventModel from "../../GameCommon/Model/GameEventModel";
+
+export default class HundredGameThan_Common  extends GameEventModel{
 
 }
