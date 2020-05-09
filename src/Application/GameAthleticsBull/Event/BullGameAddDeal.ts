@@ -1,6 +1,4 @@
-import { ui } from "../../../ui/layaMaxUI";
-import UserPropList from "../../GameCommon/widget/UserPropList";
-import Deal from "../../GameCommon/widget/Deal";
+
 import GameEventModel from "../../GameCommon/Model/GameEventModel";
 import AthleticsBullGame from "../AthleticsBullGame";
 

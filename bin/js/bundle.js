@@ -1265,6 +1265,7 @@
 
     class network {
         constructor() {
+            this.pause = false;
             this.eList = new Array();
             this.types = {};
             this.byte = new Laya.Byte();
@@ -1280,7 +1281,6 @@
         }
         addNetEvent(type, handler) {
             this.types[type] = handler;
-            console.log(this.types);
         }
         removeEvent(type) {
             if (this.types[type])
@@ -1293,20 +1293,29 @@
             this.socket.on(Laya.Event.CLOSE, this, this.closeHandler);
             this.socket.on(Laya.Event.ERROR, this, this.errorHandler);
         }
+        pauseEvent() {
+            this.pause = true;
+        }
+        resumeEvent() {
+            this.pause = false;
+        }
         openHandler(event = null) {
             console.log("链接成功");
             Laya.timer.frameLoop(1, this, () => {
-                if (!this.types || this.eList.length == 0)
+                if (this.pause || !this.types || this.eList.length == 0)
                     return;
                 while (this.eList.length) {
                     let msg = this.eList[0];
-                    this.types[msg.Name](msg.Data);
+                    let name = msg.Name || msg.name;
+                    if (this.types[name])
+                        this.types[name](msg.Data);
+                    else
+                        console.log("noRigster", name);
                     this.eList.shift();
                 }
             });
         }
         receiveHandler(msg = null) {
-            console.log(msg);
             let data = JSON.parse(msg);
             console.log(data);
             this.eList.push(data);
@@ -1318,12 +1327,8 @@
             console.log("error", e);
         }
         sendMsg(type, data) {
-            let sData = {
-                name: type,
-                Data: data
-            };
-            console.log(sData);
-            this.socket.send(JSON.stringify(sData));
+            data.Name = type;
+            this.socket.send(JSON.stringify(data));
         }
     }
 
@@ -1343,6 +1348,21 @@
         }
     }
 
+    class FlutterText extends ui.GameCommonUI.FlutterTextUI {
+        constructor(text) {
+            super();
+            this.text = text;
+        }
+        onAwake() {
+            this.number_text.text = this.text;
+        }
+        startAni() {
+            Laya.Tween.to(this, { y: this.y - 150, alpha: 0 }, 1500, null, Laya.Handler.create(this, () => {
+                this.removeSelf();
+            }));
+        }
+    }
+
     var TimeLine = Laya.TimeLine;
     var Event = Laya.Event;
     class PublicFun {
@@ -1354,6 +1374,13 @@
             if (this.instance == null)
                 this.instance = new PublicFun();
             return this.instance;
+        }
+        showText(target, num) {
+            let text = new FlutterText(num);
+            target.addChild(text);
+            text.x = target.pivotX;
+            text.y = target.pivotY;
+            text.startAni();
         }
         showAlert(node, back) {
             if (!node.getChildByName("back_gray")) {
@@ -1494,6 +1521,7 @@
         init() {
             this.rigesterScene("Login", { url: "./Login/Login.scene" });
             this.rigesterScene("Hall", { url: "./Hall/Hall.scene" });
+            this.rigesterScene("GameAthleticsBull", { url: "./GameAthleticsBull/BullGame.scene" });
         }
         changeScene(name, loadPage, removeCur = true) {
             loadPage.onAwake = () => {
@@ -1542,6 +1570,9 @@
         sendCreatGame(data) {
             this.netWork.sendMsg("GameCommon/CreateGame", data);
         }
+        sendJoinRoom(data) {
+            this.netWork.sendMsg("GameCommon/GameAction", data);
+        }
         sendAthleticsAddDeal(data) {
             this.netWork.sendMsg("GameCommon.GameAction.Athletics.AddDeal.request", data);
         }
@@ -1588,63 +1619,266 @@
         }
     }
 
+    class EventModel {
+        constructor() {
+            this.EventListener = [];
+        }
+        AddEventListener(fun) {
+            this.EventListener.push(fun);
+        }
+        RemoveEventListener(fun) {
+            let Index = this.EventListener.indexOf(fun);
+            this.EventListener.splice(Index, 1);
+        }
+        Call(caller, data) {
+            for (let i = 0; i < this.EventListener.length; i++) {
+                this.EventListener[i](caller, data, i);
+            }
+            return false;
+        }
+    }
+
+    class GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            this.GameInitialization = new EventModel();
+            this.GameInningInitialized = new EventModel();
+            this.GameUserLostConnection = new EventModel();
+            this.GameUserConnection = new EventModel();
+            this.GameEventLoadInitialization = new EventModel();
+            this.GameEventEnter = new EventModel();
+            this.GameEventLeave = new EventModel();
+            this.Game = Game;
+            this.GameEventName = GameEventName;
+            this.UI = GameUI;
+        }
+        RegisterListen() {
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Initialization", (data) => {
+                this.GameInitialization.Call(this, data);
+            });
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".InningInitialized", (data) => {
+                this.GameInningInitialized.Call(this, data);
+            });
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".UserLostConnection", (data) => {
+                this.GameUserLostConnection.Call(this, data);
+            });
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".UserConnection", (data) => {
+                this.GameEventLoadInitialization.Call(this, data);
+            });
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Enter", (data) => {
+                this.GameEventEnter.Call(this, data);
+            });
+            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Over", (data) => {
+                this.GameEventLeave.Call(this, data);
+            });
+        }
+        RemoveListen() {
+        }
+    }
+
+    class BullGameBet extends GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            super(GameEventName, GameUI, Game);
+            this.GameInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameInningInitialized.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserLostConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventLoadInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventEnter.AddEventListener((data) => {
+                this.UI.gameStatus_view.startBet();
+            });
+            this.GameEventLeave.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.RegisterListen();
+        }
+    }
+
+    class BullGameDeal extends GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            super(GameEventName, GameUI, Game);
+            this.GameInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameInningInitialized.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserLostConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventLoadInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventEnter.AddEventListener((data) => {
+                this.UI.hideAllReady();
+            });
+            this.GameEventLeave.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.RegisterListen();
+        }
+    }
+
+    class BullGameReady extends GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            super(GameEventName, GameUI, Game);
+            this.GameInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameInningInitialized.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserLostConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventLoadInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventEnter.AddEventListener((data) => {
+            });
+            this.GameEventLeave.AddEventListener((data) => {
+                console.log(data);
+            });
+        }
+    }
+
+    class BullGameNext extends GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            super(GameEventName, GameUI, Game);
+            this.GameInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameInningInitialized.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserLostConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventLoadInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventEnter.AddEventListener((data) => {
+                this.UI.initUsers();
+            });
+            this.GameEventLeave.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.RegisterListen();
+        }
+    }
+
     var Event$2 = Laya.Event;
     class AthleticsBullGame extends ui.GameAthleticsBull.BullGameUI {
         constructor() {
             super();
+            new BullGameBet("AthleticsBet", this);
+            new BullGameDeal("AthleticsDeal", this);
+            new BullGameReady("AthleticsReady", this);
+            new BullGameNext("AthleticsNextInning", this);
+            Base.netWork.addNetEvent("GameAction.Athletics.Join", (data) => {
+                this.setUsers(data.UserList, data.CurrentUser);
+            });
+            Base.netWork.addNetEvent("GameAction.Athletics.Ready", (data) => {
+                this.userReady(data.GameUserList);
+            });
+            Base.netWork.addNetEvent("GameAction.Athletics.Deal", (data) => {
+                this.dealCard(data.GameUserList);
+            });
+            Base.netWork.addNetEvent("GameAction.Athletics.Bet", (data) => {
+                this.setBets(data.GameUserList);
+            });
+            Base.netWork.addNetEvent("GameAction.Athletics.Than", (data) => {
+                this.UsersThan(data.UserList);
+            });
         }
         onAwake() {
             let userList = [];
             for (let index = 0; index < this.users.numChildren; index++) {
                 userList.push(this.users.getChildAt(index));
             }
-            this.deal_btn.on(Event$2.CLICK, this, () => {
-                this.deal_view.startDeal(userList, 30);
-            });
-            this.ani_btn.on(Event$2.CLICK, this, () => {
-                this.gameStatus_view.startBet();
-            });
             this.back_btn.on(Event$2.CLICK, this, () => {
                 Base.sceneManager.changeScene("Hall", new ui.APP_LoadingUI());
             });
-            this.than_btn.on(Event$2.CLICK, this, () => {
-                for (let i = 0; i < userList.length; i++) {
-                    userList[i].showProp([]);
-                    userList[i].showText("6666");
+            this.initUsers();
+            Base.sendNet.sendJoinRoom({
+                "Action": "AthleticsJoin",
+                "Data": {
+                    "GameID": "20200509100000"
                 }
             });
         }
-        parseComplete() {
-            var skeleton0;
-            skeleton0 = this.templet.buildArmature(0);
-            skeleton0.pos(200, 700);
-            skeleton0.showSkinByIndex(1);
-            skeleton0.play("CowFive-Start", true);
-            Laya.stage.addChild(skeleton0);
-            var skeleton1;
-            skeleton1 = this.templet.buildArmature(0);
-            skeleton1.pos(500, 700);
-            skeleton1.showSkinByIndex(1);
-            skeleton1.play("CowOne-Start", true);
-            Laya.stage.addChild(skeleton1);
+        setUsers(UserList, CurrentUser) {
+            for (let i = 0; i < this.users.numChildren; i++) {
+                let user = this.users.getChildAt(i);
+                user.visible = false;
+            }
+            for (let i = 0; i < UserList.length; i++) {
+                let u_data = UserList[i];
+                let user = this.users.getChildAt(i);
+                user.visible = true;
+                user.setMoney(u_data.UserMoney);
+                user.setUserName(u_data.UserName);
+            }
         }
-        onError() {
-            console.log("parse error");
+        userReady(UserList) {
+            for (let i = 0; i < UserList.length; i++) {
+                let user = this.users.getChildAt(i);
+                let u_data = UserList[i];
+                user.showReady(u_data.IsReady);
+            }
         }
-    }
-
-    class FlutterText extends ui.GameCommonUI.FlutterTextUI {
-        constructor(text) {
-            super();
-            this.text = text;
+        hideAllReady() {
+            for (let i = 0; i < this.users.numChildren; i++) {
+                let user = this.users.getChildAt(i);
+                user.showReady(false);
+            }
         }
-        onAwake() {
-            this.number_text.text = this.text;
+        initUsers() {
+            for (let i = 0; i < this.users.numChildren; i++) {
+                let user = this.users.getChildAt(i);
+                user.Init();
+            }
         }
-        startAni() {
-            Laya.Tween.to(this, { y: this.y - 150, alpha: 0 }, 1500, null, Laya.Handler.create(this, () => {
-                this.removeSelf();
-            }));
+        dealCard(GameUserList) {
+            let userList = [];
+            for (let index = 0; index < GameUserList.length; index++) {
+                userList.push(this.users.getChildAt(index));
+            }
+            this.deal_view.startDeal(userList, GameUserList.length * 5, GameUserList);
+        }
+        setBets(GameUserList) {
+            for (let i = 0; i < GameUserList.length; i++) {
+                let user = this.users.getChildAt(i);
+                let u_data = GameUserList[i];
+                user.showBet(u_data.Bet);
+            }
+        }
+        UsersThan(GameUserList) {
+            for (let i = 0; i < GameUserList.length; i++) {
+                let user = this.users.getChildAt(i);
+                let u_data = GameUserList[i];
+                user.showProp(u_data.PropList, u_data.PropType, () => {
+                    Base.publicFun.showText(user, u_data.PropType.PropTypeMoney);
+                });
+            }
         }
     }
 
@@ -1655,7 +1889,7 @@
         onAwake() {
             this.prop_list = this.getChildByName("prop_list");
             this.userInfo = this.getChildByName("userInfo");
-            this.banker = this.getChildByName("Banker");
+            this.banker = this.getChildByName("banker");
             this.flicker = this.getChildByName("Flicker");
             this.betNum_image = this.getChildByName("betNum_image");
         }
@@ -1672,12 +1906,15 @@
         Init() {
             this.prop_list.initCard();
             this.hideBet();
+            this.flicker.visible = false;
+            this.userInfo.ready = false;
+            this.setBanker(false);
         }
         recvCard(number) {
             this.prop_list.recvCard(number);
         }
-        showProp(list, how) {
-            this.prop_list.propCard(list);
+        showProp(list, types, callBack) {
+            this.prop_list.propCard(list, types, callBack);
         }
         setOnLine(ison) {
             this.userInfo.onLine = ison;
@@ -1688,6 +1925,9 @@
         setUserName(name) {
             this.userInfo.nickName = name;
         }
+        setMoney(money) {
+            this.userInfo.userScore = money;
+        }
         showReady(show) {
             this.userInfo.ready = show;
         }
@@ -1695,8 +1935,10 @@
             this.banker.visible = isbanker;
         }
         showBet(num) {
-            this.betNum_image.visible = true;
-            this.betNum_image.loadImage(`GameCommon/BetNumber/Game_Common_Bet_${num}.png`);
+            if (num != null) {
+                this.betNum_image.visible = true;
+                this.betNum_image.loadImage(`GameCommon/BetNumber/Game_Common_Bet_${num}.png`);
+            }
         }
         hideBet() {
             this.betNum_image.visible = false;
@@ -1711,10 +1953,15 @@
             this.UserImage = this.getChildByName("UserImage");
             this.ShowReady = this.getChildByName("ShowReady");
             this.UserName = this.getChildByName("UserName");
+            this.UserScore = this.getChildByName("UserScore");
         }
         set nickName(data) {
             this.UserName.text = data;
             this.User_Nickname = data;
+        }
+        set userScore(data) {
+            this.UserScore.text = data;
+            this.User_Score = data;
         }
         set avatarFrame(data) {
             this.UserImage.loadImage(data);
@@ -1727,8 +1974,11 @@
             this.User_OnLine = data;
         }
         set ready(data) {
-            this.ShowReady.active = data;
+            this.ShowReady.visible = data;
             this.User_Ready = data;
+        }
+        get userScore() {
+            return this.User_Score;
         }
         get nickName() {
             return this.User_Nickname;
@@ -1776,6 +2026,8 @@
         }
         updateItem(cell, index) {
             cell.visible = this.CardList_list.array[index] > -2;
+            if (cell.visible)
+                cell.prop_Number = this.CardList_list.array[index];
         }
         get curDealPos() {
             let curCard = this.getCard(this.currentDeal);
@@ -1785,8 +2037,13 @@
             this.CardList_list.array = [-2, -2, -2, -2, -2];
             this.currentDeal = 0;
             this.propIndex = 0;
+            this.propData = [];
+            this.propType_text.visible = false;
         }
-        propCard(list) {
+        propCard(list, type, callBack) {
+            this.propData = list;
+            this.propType = type;
+            this.endCall = callBack;
             Laya.timer.loop(300, this, this.animateTimeBased);
         }
         recvCard(number) {
@@ -1800,10 +2057,14 @@
         }
         animateTimeBased() {
             let card = this.getCard(this.propIndex);
-            card.prop_leftToRight("GameCommon/Props/20.png");
+            if (card.prop_Number < -1)
+                card.prop_leftToRight(this.propData[this.propIndex].PropSort);
             this.propIndex++;
             if (this.propIndex > 4) {
+                this.propType_text.visible = true;
+                this.propType_text.text = this.propType.PropTypeScore;
                 Laya.timer.clear(this, this.animateTimeBased);
+                this.endCall && this.endCall();
             }
         }
         set propList_Mark(data) {
@@ -1827,18 +2088,17 @@
             super();
             this.Prop_Number = -2;
         }
-        prop_leftToRight(image) {
+        prop_leftToRight(number) {
             Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
             Tween$1.to(this.card, { scaleX: 0 }, 150, null, Handler$2.create(this, () => {
-                console.log(image);
-                this.card.loadImage(image);
+                this.prop_Number = number;
                 Tween$1.to(this.card, { scaleX: 1 }, 150);
             }));
         }
-        prop_topToDown(image) {
+        prop_topToDown(number) {
             Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
             Tween$1.to(this.card, { scaleY: 0 }, 150, null, Handler$2.create(this, () => {
-                this.card.loadImage(image);
+                this.prop_Number = number;
                 Tween$1.to(this.card, { scaleY: 1 }, 150);
             }));
         }
@@ -1850,6 +2110,7 @@
         }
         set prop_Number(data) {
             this.Prop_Number = data;
+            this.card.loadImage("GameCommon/Props/" + data + ".png");
         }
         set sort(data) {
             this.Prop_Sort = data;
@@ -1880,7 +2141,7 @@
             this.dealIndex = 0;
             this.propDataArr = [];
             if (userInfoList) {
-                for (let i = 0; i < userInfoList.length; i++) {
+                for (let i = 0; i < total / userInfoList.length; i++) {
                     for (let index = 0; index < userInfoList.length; index++) {
                         this.propDataArr.push((userInfoList[index].PropList[i] || null));
                     }
@@ -1891,7 +2152,8 @@
         loopFun(userList, leng, total) {
             let card = new Prop();
             let user = userList[this.dealIndex % leng];
-            card.prop_Number = this.propDataArr[this.dealIndex] ? this.propDataArr[this.dealIndex].GetPropNum() : -1;
+            let propData = this.propDataArr[this.dealIndex];
+            card.prop_Number = propData.PropSort;
             this.addChild(card);
             Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
             this.dealToUser(card, user);
@@ -1955,7 +2217,6 @@
             image && this.setImage(image);
             this.visible = true;
             this.image.x = this.width + this.image.width / 2;
-            console.log(this.image);
             Tween$3.to(this.image, { x: this.width / 2 }, 300, null, Handler$6.create(this, () => {
                 Tween$3.to(this.image, { x: -this.image.width / 2 }, 300, null, Handler$6.create(this, () => {
                     this.visible = false;
@@ -2167,12 +2428,6 @@
                         data.checks.push(checked);
                     }
                 }
-                Base.sendNet.sendCreatGame({
-                    "MaxUser": 6,
-                    "MinUser": 2,
-                    "GamePlaying": "Bull.Max",
-                    "BaseScore": 1
-                });
                 console.log(data);
             });
             this.tabButtons_list.selectEnable = true;
@@ -3228,96 +3483,14 @@
         ]
     };
 
-    class EventModel {
-        constructor() {
-            this.EventListener = [];
-        }
-        AddEventListener(fun) {
-            this.EventListener.push(fun);
-        }
-        RemoveEventListener(fun) {
-            let Index = this.EventListener.indexOf(fun);
-            this.EventListener.splice(Index, 1);
-        }
-        Call(caller, data) {
-            for (let i = 0; i < this.EventListener.length; i++) {
-                this.EventListener[i](caller, data, i);
-            }
-            return false;
-        }
-    }
-
-    class GameEventModel {
-        constructor(GameEventName, GameUI, Game) {
-            this.GameInitialization = new EventModel();
-            this.GameInningInitialized = new EventModel();
-            this.GameUserLostConnection = new EventModel();
-            this.GameUserConnection = new EventModel();
-            this.GameEventLoadInitialization = new EventModel();
-            this.GameEventEnter = new EventModel();
-            this.GameEventLeave = new EventModel();
-            this.Game = Game;
-            this.GameEventName = GameEventName;
-            this.UI = GameUI;
-        }
-        RegisterListen() {
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Initialization", (data) => {
-                this.GameInitialization.Call(this, data);
-            });
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".InningInitialized", (data) => {
-                this.GameInningInitialized.Call(this, data);
-            });
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".UserLostConnection", (data) => {
-                this.GameUserLostConnection.Call(this, data);
-            });
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".UserConnection", (data) => {
-                this.GameEventLoadInitialization.Call(this, data);
-            });
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Enter", (data) => {
-                this.GameEventEnter.Call(this, data);
-            });
-            Base.netWork.addNetEvent("GameAction." + this.GameEventName + ".Over", (data) => {
-                this.GameEventLeave.Call(this, data);
-            });
-        }
-        RemoveListen() {
-        }
-    }
-
-    class BullGameBet extends GameEventModel {
-        constructor(GameEventName, GameUI, Game) {
-            super(GameEventName, GameUI, Game);
-            this.GameInitialization.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameInningInitialized.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameUserLostConnection.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameUserConnection.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameEventLoadInitialization.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameEventEnter.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.GameEventLeave.AddEventListener((data) => {
-                console.log(data);
-            });
-            this.RegisterListen();
-        }
-    }
-
     var Event$q = Laya.Event;
     var Handler$g = Laya.Handler;
     class Hall extends ui.Hall.HallUI {
         constructor() {
             super();
-            new BullGameBet("GameCommon/CreateGame", this);
+            Base.netWork.addNetEvent("GameCommon.CreateGame.Succeed", () => {
+                Base.sceneManager.changeScene("GameAthleticsBull", new ui.GameAthleticsBull.BullLoadingUI());
+            });
         }
         onAwake() {
             this.icon_list.hScrollBarSkin = "";
@@ -3353,7 +3526,14 @@
                 Base.publicFun.showAlert(this.addChild(new Recharge()));
             });
             this.creatRoom_btn.on(Event$q.CLICK, this, () => {
-                Base.publicFun.showAlert(this.addChild(new CommonCreatRoom()));
+                Base.sendNet.sendCreatGame({
+                    Data: {
+                        "MaxUser": 6,
+                        "MinUser": 2,
+                        "GamePlaying": "Bull.Max",
+                        "BaseScore": 1
+                    }
+                });
             });
             this.typeHide_btn.on(Event$q.CLICK, this, () => {
                 this.GameTypeSelection_view.hideSelf(() => {

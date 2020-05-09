@@ -1,11 +1,12 @@
 {
     "x":0,
     "type":"Scene",
-    "selectedBox":2,
+    "selectedBox":4,
+    "selecteID":65,
     "searchKey":"Scene",
     "props":{"width":1920,"sceneColor":"#000000","runtime":"Application/Hall/Hall.ts","height":1080},
     "nodeParent":-1,
-    "maxID":65,
+    "maxID":66,
     "label":"Scene",
     "isOpen":true,
     "isDirectory":true,
@@ -35,13 +36,14 @@
             "props":{"y":0,"x":0,"texture":"Hall/BottomONE.png"},
             "nodeParent":2,
             "label":"Sprite",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":4,
             "child":[
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,addZuanShi_btn,addZuanShi_btn",
                     "props":{"y":34,"x":960,"var":"addZuanShi_btn","texture":"Hall/Background strip.png","name":"addZuanShi_btn"},
@@ -94,6 +96,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,addGold_btn,addGold_btn",
                     "props":{"y":34,"x":412,"var":"addGold_btn","texture":"Hall/Background strip.png","name":"addGold_btn"},
@@ -134,6 +137,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,user_btn,user_btn",
                     "props":{"y":20.5,"x":18,"var":"user_btn","texture":"GameCommon/User/Avatar.png","name":"user_btn"},
@@ -186,6 +190,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite",
                     "props":{"y":42,"x":793,"texture":"Hall/Add.png"},
@@ -199,6 +204,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "searchKey":"Button,creatRoom_btn,creatRoom_btn",
                     "props":{"y":45,"x":1659,"var":"creatRoom_btn","stateNum":"1","skin":"Hall/Gold.png","runtime":"Application/GameCommon/widget/Button.ts","name":"creatRoom_btn"},
@@ -208,6 +214,20 @@
                     "isAniNode":true,
                     "hasChild":false,
                     "compId":60,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Button",
+                    "searchKey":"Button,joinRoom_btn,joinRoom_btn",
+                    "props":{"y":42,"x":1771,"var":"joinRoom_btn","stateNum":"1","skin":"Hall/Gold.png","runtime":"Application/GameCommon/widget/Button.ts","name":"joinRoom_btn"},
+                    "nodeParent":4,
+                    "label":"joinRoom_btn",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":65,
                     "child":[
                         ]
                 }]
@@ -373,7 +393,8 @@
             "hasChild":false,
             "compId":64,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         }],
     "animations":[
         {

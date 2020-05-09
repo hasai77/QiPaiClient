@@ -1,9 +1,4 @@
-import { ui } from "../../../ui/layaMaxUI";
-import UserPropList from "../../GameCommon/widget/UserPropList";
 
-import Chip from "../../GameCommon/widget/Chip";
-import base from "../../../base/base";
-import UserInfoModel from "../../GameCommon/Model/UserInfoModel";
 import GameEventModel from "../../GameCommon/Model/GameEventModel";
 import AthleticsBullGame from "../AthleticsBullGame";
 export default class BullGameSettlement  extends GameEventModel{

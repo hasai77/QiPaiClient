@@ -12,21 +12,26 @@ export default class User extends Laya.Sprite {
     private User_Role: string;//用户在线状态
     private User_OnLine: boolean;//用户准备状态
     private User_Ready: boolean;//
-
+    private User_Score:string
 
     private UserName:Laya.Text;
     private UserImage:Laya.Sprite;
     private ShowReady:Laya.Sprite;
-
+    private UserScore:Laya.Text;
     onAwake(){
         this.UserImage = <Laya.Sprite>this.getChildByName("UserImage");
         this.ShowReady = <Laya.Sprite>this.getChildByName("ShowReady");
         this.UserName = <Laya.Text>this.getChildByName("UserName");
+        this.UserScore=<Laya.Text>this.getChildByName("UserScore");
     }
 
     public set nickName(data:string) {
         this.UserName.text = data;
         this.User_Nickname = data
+    }
+    public set userScore(data:string) {
+        this.UserScore.text = data;
+        this.User_Score = data
     }
     public set avatarFrame(data:any) {
         this.UserImage.loadImage(data)
@@ -39,10 +44,14 @@ export default class User extends Laya.Sprite {
         this.User_OnLine = data
     }
     public set ready(data:boolean) {
-        this.ShowReady.active =data;
+        this.ShowReady.visible =data;
         this.User_Ready = data
     }
 
+
+    public get userScore() {
+       return this.User_Score
+    }
     public get nickName():string {
         return this.User_Nickname
     }

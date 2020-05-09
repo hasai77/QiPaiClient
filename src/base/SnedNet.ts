@@ -21,6 +21,9 @@ export default class  SnedNet {
     public sendCreatGame(data:any):void{
         this.netWork.sendMsg("GameCommon/CreateGame",data);
     }
+    public sendJoinRoom(data:any):void{
+        this.netWork.sendMsg("GameCommon/GameAction",data);
+    }
     
     public sendAthleticsAddDeal(data:any):void{
         this.netWork.sendMsg("GameCommon.GameAction.Athletics.AddDeal.request",data);

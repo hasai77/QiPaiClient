@@ -11,14 +11,14 @@ export default class Deal extends ui.GameCommonUI.Athletics.DealUI {
         super()
     }
     private dealIndex: number;
-    private propDataArr: PropModel[];
-    public startDeal(userList: any[], total, userInfoList?: Array<UserInfoModel>): void {
+    private propDataArr:any;
+    public startDeal(userList: any[], total, userInfoList?: any): void {
         this.visible = true;
         let leng = userList.length;
         this.dealIndex = 0;
         this.propDataArr = [];
         if (userInfoList) {
-            for (let i = 0; i < userInfoList.length; i++) {
+            for (let i = 0; i <total/ userInfoList.length; i++) {
                 for (let index = 0; index < userInfoList.length; index++) {
                     this.propDataArr.push((userInfoList[index].PropList[i] || null))
                 }
@@ -30,9 +30,9 @@ export default class Deal extends ui.GameCommonUI.Athletics.DealUI {
     private loopFun(userList: any[], leng: number, total: number): void {
         let card = new Prop();
         let user = userList[this.dealIndex % leng]
-        card.prop_Number = this.propDataArr[this.dealIndex]?this.propDataArr[this.dealIndex].GetPropNum():-1;
+        let propData = this.propDataArr[this.dealIndex];
+        card.prop_Number = propData.PropSort
         this.addChild(card)
-        // Base.publicFun.setCenter(card);
         Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
         this.dealToUser(card, user);
 

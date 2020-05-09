@@ -72,9 +72,6 @@ export module ui.GameAthleticsBull {
 		public bet_view:any;
 		public rob_view:any;
 		public gameStatus_view:any;
-		public deal_btn:Laya.Sprite;
-		public ani_btn:Laya.Sprite;
-		public than_btn:Laya.Sprite;
 		public back_btn:Laya.Sprite;
         constructor(){ super()}
         createChildren():void {
@@ -905,6 +902,7 @@ export module ui.Hall {
 		public addGold_btn:Laya.Sprite;
 		public user_btn:Laya.Sprite;
 		public creatRoom_btn:any;
+		public joinRoom_btn:any;
 		public setting_btn:any;
 		public combat_btn:any;
 		public mgs_btn:any;

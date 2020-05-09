@@ -1,10 +1,6 @@
-import { ui } from "../../../ui/layaMaxUI";
-import UserPropList from "../../GameCommon/widget/UserPropList";
 
-import Chip from "../../GameCommon/widget/Chip";
-import base from "../../../base/base";
 import GameEventModel from "../../GameCommon/Model/GameEventModel";
-import UserInfoModel from "../../GameCommon/Model/UserInfoModel";
+
 import AthleticsBullGame from "../AthleticsBullGame";
 export default class BullGameRob  extends GameEventModel{
     constructor(GameEventName: string, GameUI:AthleticsBullGame, Game?: Application.GameCommonInterface.GameCommon) {

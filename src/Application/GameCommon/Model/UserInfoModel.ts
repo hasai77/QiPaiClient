@@ -7,6 +7,7 @@ export default class UserInfoModel implements Application.GameCommonInterface.Us
     protected UserLastTime: number
     protected UserHeader:string;
     protected UserClientType: string
+    protected UserMoney:number
     protected IsLogin: boolean
     protected Token: string
     protected Ready:boolean;
@@ -15,8 +16,14 @@ export default class UserInfoModel implements Application.GameCommonInterface.Us
         return this.UserID
     }
 
-  
+    
 
+    public SetUserMoney(UserMoney: number) {
+        this.UserMoney = UserMoney
+    }
+    public GetUserMoney() {
+       return this.UserMoney
+    }
     public SetUserID(UserID: number) {
         this.UserID = UserID
     }

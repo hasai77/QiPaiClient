@@ -2,6 +2,7 @@ import TimeLine = Laya.TimeLine;
 import Event = Laya.Event;
 import CommonPopup from "../Application/GameCommonUI/CommonPopup";
 import CommonTaost from "../Application/GameCommonUI/CommonToast";
+import FlutterText from "../Application/GameCommon/widget/FlutterText";
 export default class PublicFun {
     constructor() {
 
@@ -14,7 +15,13 @@ export default class PublicFun {
             this.instance = new PublicFun();
         return this.instance;
     }
-
+    public showText(target:Laya.Sprite,num:string):void{
+        let text = new FlutterText(num);
+        target.addChild(text);
+        text.x = target.pivotX;
+        text.y = target.pivotY;
+        text.startAni()
+    }
     public showAlert(node: Laya.Sprite, back?: boolean): void {
         if (!node.getChildByName("back_gray")) {
             let rect = new Laya.Sprite();

@@ -2,18 +2,20 @@
     "x":0,
     "type":"Sprite",
     "selectedBox":11,
+    "selecteID":8,
     "searchKey":"Sprite,User",
     "props":{"y":0,"x":0,"width":195,"sceneWidth":195,"sceneHeight":282,"runtime":"Application/GameCommon/widget/User.ts","presetID":1,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"User","isPresetRoot":true,"height":282},
     "nodeParent":-1,
     "maxID":12,
     "label":"User",
-    "isOpen":null,
+    "isOpen":true,
     "isDirectory":true,
     "isAniNode":true,
     "hasChild":true,
     "compId":11,
     "child":[
         {
+            "x":15,
             "type":"Image",
             "searchKey":"Image,UserImage",
             "props":{"skin":"GameCommon/User/Game_Common_UI_MessageBoxVertical.png","presetID":2,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"UserImage"},
@@ -27,6 +29,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"Sprite",
             "searchKey":"Sprite",
             "props":{"y":19,"x":16,"width":163,"texture":"GameCommon/User/Avatar.png","presetID":3,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","height":161},
@@ -40,9 +43,10 @@
                 ]
         },
         {
+            "x":15,
             "type":"Text",
             "searchKey":"Text,UserName",
-            "props":{"y":188,"x":26,"width":143,"valign":"middle","text":"啊哈哈哈哈哈","presetID":4,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"UserName","height":27,"fontSize":18,"font":"Microsoft YaHei","color":"#ffffff","align":"center"},
+            "props":{"y":188,"x":15,"width":169,"valign":"middle","text":"啊哈哈哈哈哈","presetID":4,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"UserName","height":27,"fontSize":25,"font":"Microsoft YaHei","color":"#ffffff","align":"center"},
             "nodeParent":11,
             "label":"UserName",
             "isDirectory":false,
@@ -53,9 +57,10 @@
                 ]
         },
         {
+            "x":15,
             "type":"Text",
             "searchKey":"Text,UserScore",
-            "props":{"y":229,"x":48,"width":123,"valign":"middle","text":"99999999","presetID":5,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"UserScore","height":28,"fontSize":18,"font":"Microsoft YaHei","color":"#ffffff","align":"left"},
+            "props":{"y":229,"x":48,"width":123,"valign":"middle","text":"99999999","presetID":5,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"UserScore","height":28,"fontSize":25,"font":"Microsoft YaHei","color":"#ffffff","align":"left"},
             "nodeParent":11,
             "label":"UserScore",
             "isDirectory":false,
@@ -66,9 +71,10 @@
                 ]
         },
         {
+            "x":15,
             "type":"Sprite",
             "searchKey":"Sprite,ShowReady",
-            "props":{"y":191,"x":70,"visible":true,"texture":"GameCommon/User/Ok.png","presetID":6,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"ShowReady"},
+            "props":{"y":0,"x":109.5,"visible":true,"texture":"GameCommon/User/Ok.png","presetID":6,"preset":"laya/pages/GameCommonUI/perfab/User.prefab","name":"ShowReady"},
             "nodeParent":11,
             "label":"ShowReady",
             "isDirectory":false,

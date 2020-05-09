@@ -1,0 +1,18 @@
+[
+  {
+    "flatMessage": "Property 'deal_btn' does not exist on type 'AthleticsBullGame'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts\u001b[0m:\u001b[93m53\u001b[0m:\u001b[93m14\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'deal_btn' does not exist on type 'AthleticsBullGame'.\r\n\r\n\u001b[7m53\u001b[0m         this.deal_btn.on(Event.CLICK, this, () => {\r\n\u001b[7m  \u001b[0m \u001b[91m             ~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts\u001b[0m:\u001b[93m61\u001b[0m:\u001b[93m14\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'than_btn' does not exist on type 'AthleticsBullGame'.\r\n\r\n\u001b[7m61\u001b[0m         this.than_btn.on(Event.CLICK, this, () => {\r\n\u001b[7m  \u001b[0m \u001b[91m             ~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2339,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts(53,14)"
+  },
+  {
+    "flatMessage": "Property 'than_btn' does not exist on type 'AthleticsBullGame'.",
+    "formatted": "\u001b[96mC:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts\u001b[0m:\u001b[93m53\u001b[0m:\u001b[93m14\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'deal_btn' does not exist on type 'AthleticsBullGame'.\r\n\r\n\u001b[7m53\u001b[0m         this.deal_btn.on(Event.CLICK, this, () => {\r\n\u001b[7m  \u001b[0m \u001b[91m             ~~~~~~~~\u001b[0m\r\n\u001b[96mC:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts\u001b[0m:\u001b[93m61\u001b[0m:\u001b[93m14\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'than_btn' does not exist on type 'AthleticsBullGame'.\r\n\r\n\u001b[7m61\u001b[0m         this.than_btn.on(Event.CLICK, this, () => {\r\n\u001b[7m  \u001b[0m \u001b[91m             ~~~~~~~~\u001b[0m\r\n",
+    "category": 1,
+    "code": 2339,
+    "type": "semantic",
+    "fileLine": "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts(61,14)"
+  }
+]

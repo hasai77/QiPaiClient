@@ -13,7 +13,6 @@ export default class TransAni extends ui.GameCommonUI.Athletics.TansAniUI{
         image&&this.setImage(image)
         this.visible = true;
         this.image.x = this.width + this.image.width/2;
-        console.log(this.image)
         Tween.to(this.image,{x:this.width/2},300, null, Handler.create(this,()=>{
             Tween.to(this.image,{x:-this.image.width/2},300,null,Handler.create(this,()=>{
                 this.visible = false;

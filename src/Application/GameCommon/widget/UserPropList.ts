@@ -17,7 +17,7 @@ export default class UserPropList extends Laya.Sprite {
     onAwake(){
       this.prop_list = <PropList>this.getChildByName("prop_list");
       this.userInfo = <User>this.getChildByName("userInfo");
-      this.banker = <Laya.Sprite>this.getChildByName("Banker");
+      this.banker = <Laya.Sprite>this.getChildByName("banker");
       this.flicker = <Flicker>this.getChildByName("Flicker");
       this.betNum_image = <Laya.Sprite>this.getChildByName("betNum_image");
       
@@ -36,13 +36,16 @@ export default class UserPropList extends Laya.Sprite {
 
         this.prop_list.initCard();
         this.hideBet();
+        this.flicker.visible = false;
+        this.userInfo.ready = false;
+        this.setBanker(false)
     }
     public recvCard(number):void{
         //发牌接收
         this.prop_list.recvCard(number)
     }
-    public showProp(list,how?):void{
-        this.prop_list.propCard(list)
+    public showProp(list,types?,callBack?):void{
+        this.prop_list.propCard(list,types,callBack)
     }
     public setOnLine(ison):void{
         this.userInfo.onLine = ison;
@@ -53,6 +56,10 @@ export default class UserPropList extends Laya.Sprite {
     public setUserName(name):void{
         this.userInfo.nickName = name
     }
+    public setMoney(money):void{
+        this.userInfo.userScore = money
+        
+    }
     public showReady(show):void{
         this.userInfo.ready = show;
     }
@@ -60,8 +67,11 @@ export default class UserPropList extends Laya.Sprite {
         this.banker.visible = isbanker;
     }
     public showBet(num:number):void{
-        this.betNum_image.visible = true;
-        this.betNum_image.loadImage(`GameCommon/BetNumber/Game_Common_Bet_${num}.png`)
+        if(num!=null)
+        {
+            this.betNum_image.visible = true;
+            this.betNum_image.loadImage(`GameCommon/BetNumber/Game_Common_Bet_${num}.png`)
+        }
     }
     public hideBet():void{
         this.betNum_image.visible = false;

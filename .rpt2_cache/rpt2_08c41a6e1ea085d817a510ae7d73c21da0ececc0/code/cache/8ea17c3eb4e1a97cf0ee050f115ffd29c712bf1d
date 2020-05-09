@@ -1,0 +1,4 @@
+{
+  "code": "export default class EventModel {\r\n    constructor() {\r\n        this.EventListener = [];\r\n    }\r\n    AddEventListener(fun) {\r\n        this.EventListener.push(fun);\r\n    }\r\n    RemoveEventListener(fun) {\r\n        let Index = this.EventListener.indexOf(fun);\r\n        this.EventListener.splice(Index, 1);\r\n    }\r\n    Call(caller, data) {\r\n        for (let i = 0; i < this.EventListener.length; i++) {\r\n            this.EventListener[i](caller, data, i);\r\n        }\r\n        return false;\r\n    }\r\n}\r\n",
+  "references": []
+}

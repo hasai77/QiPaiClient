@@ -1,0 +1,10 @@
+{
+  "code": "import GameEventModel from \"../../GameCommon/Model/GameEventModel\";\r\nexport default class BullGameBet extends GameEventModel {\r\n    constructor(GameEventName, GameUI, Game) {\r\n        super(GameEventName, GameUI, Game);\r\n        this.GameInitialization.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.GameInningInitialized.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.GameUserLostConnection.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.GameUserConnection.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.GameEventLoadInitialization.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.GameEventEnter.AddEventListener((data) => {\r\n            this.UI.gameStatus_view.startBet();\r\n        });\r\n        this.GameEventLeave.AddEventListener((data) => {\r\n            console.log(data);\r\n        });\r\n        this.RegisterListen();\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameCommon/widget/UserPropList.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameCommon/Model/GameEventModel.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameAthleticsBull/AthleticsBullGame.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameCommon/widget/TransAni.ts"
+  ]
+}

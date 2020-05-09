@@ -53,12 +53,6 @@ export default class CommonCreatRoom extends ui.GameCommonUI.CommonCreatRoomUI {
                     data.checks.push(checked)
                 }
             }
-            base.sendNet.sendCreatGame({
-                "MaxUser": 6,
-                "MinUser": 2,
-                "GamePlaying": "Bull.Max",
-                "BaseScore": 1
-            })
             console.log(data)
         })
         this.tabButtons_list.selectEnable = true;
@@ -126,16 +120,5 @@ export default class CommonCreatRoom extends ui.GameCommonUI.CommonCreatRoomUI {
             this.curRuleView.removeSelf();
         this.curRuleView = new (this.tabButtons_list.array[index].ruleView)();
         this.rule_group.addChild(this.curRuleView)
-        // let selected = <Laya.Sprite>cell.getChildByName("selected");
-        // let unselect = <Laya.Sprite>cell.getChildByName("unselect");
-        // let selected_text = <Laya.Text>cell.getChildByName("selected_text");
-        // let unselect_text = <Laya.Text>cell.getChildByName("unselect_text");
-        // for (let i = 0; i < this.tabButtons_list.numChildren; i++) {
-        //     let isShow = (index == i)
-        //     selected.visible = isShow;
-        //     selected_text.visible = isShow;
-        //     unselect.visible = !isShow;
-        //     unselect_text.visible = !isShow;
-        // }
     }
 }

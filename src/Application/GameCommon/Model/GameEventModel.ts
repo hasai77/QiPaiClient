@@ -2,7 +2,7 @@ import base from "../../../base/base";
 import EventModel from "../../../Lib/EventModel";
 
 export default class GameEventModel implements Application.GameCommonInterface.Event {
-    private UI:any;
+    public UI:any;
     public Game: Application.GameCommonInterface.GameCommon;
     //事件名称
     private GameEventName: string;

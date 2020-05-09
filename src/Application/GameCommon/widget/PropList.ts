@@ -9,13 +9,17 @@ export default class PropList extends ui.GameCommonUI.Athletics.PropListUI {
     private PropList_Name: string;//牌型类型名称
     private propIndex: number = 0;
     private currentDeal: number = 0;
-
+    private propData:any[]
+    private propType:any
+    private endCall:Function
     onAwake() {
         this.CardList_list.renderHandler = new Handler(this, this.updateItem);
         this.initCard()
     }
     private updateItem(cell: Prop, index: number): void {
         cell.visible = this.CardList_list.array[index] > -2;
+        if(cell.visible)
+        cell.prop_Number = this.CardList_list.array[index]
     }
 
     public get curDealPos(): Laya.Point {
@@ -23,13 +27,18 @@ export default class PropList extends ui.GameCommonUI.Athletics.PropListUI {
         return this.CardList_list.localToGlobal(new Laya.Point(curCard.x, curCard.y));
     }
     public initCard(): void {
-      
         this.CardList_list.array = [-2, -2, -2, -2, -2]
         this.currentDeal = 0;
         this.propIndex = 0;
+        this.propData  =[];
+        
+        this.propType_text.visible = false;
     }
-    public propCard(list) {
+    public propCard(list,type?,callBack?) {
         //暂时不知道数据格式
+        this.propData = list;
+        this.propType = type;
+        this.endCall = callBack
         Laya.timer.loop(300, this, this.animateTimeBased);
     }
     public recvCard(number: number): void {
@@ -43,11 +52,14 @@ export default class PropList extends ui.GameCommonUI.Athletics.PropListUI {
     }
     private animateTimeBased(): void {
         let card = this.getCard(this.propIndex);
-        // if (card.prop_Number < 0)
-            card.prop_leftToRight("GameCommon/Props/20.png");
+        if (card.prop_Number < -1)
+            card.prop_leftToRight(this.propData[this.propIndex].PropSort);
         this.propIndex++;
         if (this.propIndex > 4) {
+            this.propType_text.visible = true;
+            this.propType_text.text = this.propType.PropTypeScore
             Laya.timer.clear(this, this.animateTimeBased)
+            this.endCall&& this.endCall()
         }
 
     }
