@@ -1307,6 +1307,7 @@
                 while (this.eList.length) {
                     let msg = this.eList[0];
                     let name = msg.Name || msg.name;
+                    console.log(name);
                     if (this.types[name])
                         this.types[name](msg.Data);
                     else
@@ -1363,6 +1364,28 @@
         }
     }
 
+    var Handler = Laya.Handler;
+    var Tween = Laya.Tween;
+    class Chip extends ui.GameCommonUI.Athletics.ChipUI {
+        constructor() {
+            super();
+        }
+        toTargerShow(target, compFunc) {
+            Tween.to(this, { x: target.x, y: target.y }, 300, null, Handler.create(this, () => {
+                Tween.to(this, { scaleX: 1.1, scaleY: 1.1 }, 300, null, Handler.create(this, () => {
+                    Tween.to(this, { scaleX: 1, scaleY: 1 }, 300, null, Handler.create(this, () => {
+                        compFunc && compFunc();
+                    }));
+                }));
+            }));
+        }
+        toTargerHide(target) {
+            Tween.to(this, { x: target.x, y: target.y }, 300, null, Handler.create(this, () => {
+                this.removeSelf();
+            }));
+        }
+    }
+
     var TimeLine = Laya.TimeLine;
     var Event = Laya.Event;
     class PublicFun {
@@ -1374,6 +1397,21 @@
             if (this.instance == null)
                 this.instance = new PublicFun();
             return this.instance;
+        }
+        userChip(user, recvPanel) {
+            let chip = new Chip();
+            chip.x = user.x - recvPanel.x;
+            chip.y = user.y - recvPanel.y;
+            recvPanel.addChild(chip);
+            chip.toTargerShow(this.getRecvPos(recvPanel), null);
+            return chip;
+        }
+        chipUser(user, recvPanel, start, end) {
+            let target = { x: user.x - recvPanel.x, y: user.y - recvPanel.y };
+            console.log(recvPanel.numChildren, end);
+            for (let i = start; i < end; i++) {
+                recvPanel.getChildAt(i).toTargerHide(target);
+            }
         }
         showText(target, num) {
             let text = new FlutterText(num);
@@ -1488,8 +1526,8 @@
             return { x, y };
         }
         getMineIndex(list, mineId) {
-            for (let i = 0; i < list.length, i++;) {
-                if (list[i].id == mineId)
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].UserID == mineId)
                     return i;
             }
             return -1;
@@ -1503,7 +1541,7 @@
         }
     }
 
-    var Handler = Laya.Handler;
+    var Handler$1 = Laya.Handler;
     class SceneManager {
         constructor() {
             this.sceneList = {};
@@ -1526,7 +1564,7 @@
         changeScene(name, loadPage, removeCur = true) {
             loadPage.onAwake = () => {
                 Laya.Scene.open;
-                Laya.Scene.load(this.sceneList[name].url, Handler.create(this, (scene) => {
+                Laya.Scene.load(this.sceneList[name].url, Handler$1.create(this, (scene) => {
                     if (this.curScene) {
                         this.curScene.destroy();
                     }
@@ -1535,7 +1573,7 @@
                         this.curScene = scene;
                         loadPage.removeSelf();
                     });
-                }), Handler.create(this, (e) => {
+                }), Handler$1.create(this, (e) => {
                     loadPage.progress.percent = (e * 100);
                 }, null, false));
             };
@@ -1595,19 +1633,19 @@
     var Base = base.getinstance();
 
     var Event$1 = Laya.Event;
-    var Tween = Laya.Tween;
+    var Tween$1 = Laya.Tween;
     class ActionButton extends Laya.Button {
         constructor(res) {
             super(res);
             this.on(Event$1.MOUSE_DOWN, this, () => {
-                Tween.to(this, { scaleX: 0.9, scaleY: 0.9 }, 100);
+                Tween$1.to(this, { scaleX: 0.9, scaleY: 0.9 }, 100);
                 Laya.SoundManager.playSound("GameCommon/sound/Game_Common_Button.mp3");
             });
             this.on(Event$1.MOUSE_UP, this, () => {
-                Tween.to(this, { scaleX: 1, scaleY: 1 }, 100);
+                Tween$1.to(this, { scaleX: 1, scaleY: 1 }, 100);
             });
             this.on(Event$1.MOUSE_OUT, this, () => {
-                Tween.to(this, { scaleX: 1, scaleY: 1 }, 100);
+                Tween$1.to(this, { scaleX: 1, scaleY: 1 }, 100);
             });
         }
         onComplete() {
@@ -1754,6 +1792,7 @@
             this.GameEventLeave.AddEventListener((data) => {
                 console.log(data);
             });
+            this.RegisterListen();
         }
     }
 
@@ -1785,6 +1824,34 @@
         }
     }
 
+    class BullGameShowProp extends GameEventModel {
+        constructor(GameEventName, GameUI, Game) {
+            super(GameEventName, GameUI, Game);
+            this.GameInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameInningInitialized.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserLostConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameUserConnection.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventLoadInitialization.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.GameEventEnter.AddEventListener((data) => {
+                this.UI.hideBets();
+            });
+            this.GameEventLeave.AddEventListener((data) => {
+                console.log(data);
+            });
+            this.RegisterListen();
+        }
+    }
+
     var Event$2 = Laya.Event;
     class AthleticsBullGame extends ui.GameAthleticsBull.BullGameUI {
         constructor() {
@@ -1793,6 +1860,7 @@
             new BullGameDeal("AthleticsDeal", this);
             new BullGameReady("AthleticsReady", this);
             new BullGameNext("AthleticsNextInning", this);
+            new BullGameShowProp("AthleticsShowProp", this);
             Base.netWork.addNetEvent("GameAction.Athletics.Join", (data) => {
                 this.setUsers(data.UserList, data.CurrentUser);
             });
@@ -1803,10 +1871,13 @@
                 this.dealCard(data.GameUserList);
             });
             Base.netWork.addNetEvent("GameAction.Athletics.Bet", (data) => {
-                this.setBets(data.GameUserList);
+                this.setBets(data.GameUserList, data.Current);
             });
             Base.netWork.addNetEvent("GameAction.Athletics.Than", (data) => {
                 this.UsersThan(data.UserList);
+            });
+            Base.netWork.addNetEvent("GameAction.Athletics.Settlement", (data) => {
+                this.Settlement(data.GameUserList, data.ThanList);
             });
         }
         onAwake() {
@@ -1821,7 +1892,7 @@
             Base.sendNet.sendJoinRoom({
                 "Action": "AthleticsJoin",
                 "Data": {
-                    "GameID": "20200509100000"
+                    "GameID": "20200510100000"
                 }
             });
         }
@@ -1864,21 +1935,57 @@
             }
             this.deal_view.startDeal(userList, GameUserList.length * 5, GameUserList);
         }
-        setBets(GameUserList) {
-            for (let i = 0; i < GameUserList.length; i++) {
+        setBets(GameUserList, Current) {
+            let index = Base.publicFun.getMineIndex(GameUserList, Current.User.UserID);
+            let arr = [0, 2, 4, 5, 10, 20];
+            let user = this.users.getChildAt(index);
+            user.showBet(arr[Current.Bet]);
+        }
+        hideBets() {
+            for (let i = 0; i < this.users.numChildren; i++) {
                 let user = this.users.getChildAt(i);
-                let u_data = GameUserList[i];
-                user.showBet(u_data.Bet);
+                user.hideBet();
             }
         }
         UsersThan(GameUserList) {
             for (let i = 0; i < GameUserList.length; i++) {
                 let user = this.users.getChildAt(i);
                 let u_data = GameUserList[i];
-                user.showProp(u_data.PropList, u_data.PropType, () => {
-                    Base.publicFun.showText(user, u_data.PropType.PropTypeMoney);
-                });
+                user.showProp(u_data.PropList, u_data.PropType);
             }
+        }
+        Settlement(GameUserList, ThanList) {
+            for (let i = 0; i < GameUserList.length; i++) {
+                if (GameUserList[i].GameMoney < 0) {
+                    let index = Base.publicFun.getMineIndex(GameUserList, GameUserList[i].UserID);
+                    let user = this.users.getChildAt(index);
+                    let num = Math.abs(GameUserList[i].GameMoney);
+                    this.userChips(user, num);
+                    Base.publicFun.showText(user, "-" + num);
+                }
+            }
+            setTimeout(() => {
+                let curPos = 0;
+                for (let i = 0; i < GameUserList.length; i++) {
+                    if (GameUserList[i].GameMoney > 0) {
+                        let index = Base.publicFun.getMineIndex(GameUserList, GameUserList[i].UserID);
+                        let user = this.users.getChildAt(index);
+                        let num = Math.abs(GameUserList[i].GameMoney);
+                        this.chipsUser(user, num, curPos);
+                        Base.publicFun.showText(user, "+" + num);
+                        curPos = GameUserList[i].GameMoney;
+                    }
+                }
+            }, 1000);
+        }
+        userChips(user, num) {
+            for (let i = 0; i < num; i++) {
+                Base.publicFun.userChip(user, this.recv_panel);
+            }
+        }
+        chipsUser(user, num, start) {
+            let end = start + num;
+            Base.publicFun.chipUser(user, this.recv_panel, start, end);
         }
     }
 
@@ -2013,7 +2120,7 @@
         }
     }
 
-    var Handler$1 = Laya.Handler;
+    var Handler$2 = Laya.Handler;
     class PropList extends ui.GameCommonUI.Athletics.PropListUI {
         constructor() {
             super();
@@ -2021,7 +2128,7 @@
             this.currentDeal = 0;
         }
         onAwake() {
-            this.CardList_list.renderHandler = new Handler$1(this, this.updateItem);
+            this.CardList_list.renderHandler = new Handler$2(this, this.updateItem);
             this.initCard();
         }
         updateItem(cell, index) {
@@ -2057,14 +2164,19 @@
         }
         animateTimeBased() {
             let card = this.getCard(this.propIndex);
-            if (card.prop_Number < -1)
-                card.prop_leftToRight(this.propData[this.propIndex].PropSort);
-            this.propIndex++;
+            while (card.prop_Number > -1 && this.propIndex < 5) {
+                this.propIndex++;
+                card = this.getCard(this.propIndex);
+            }
             if (this.propIndex > 4) {
                 this.propType_text.visible = true;
                 this.propType_text.text = this.propType.PropTypeScore;
                 Laya.timer.clear(this, this.animateTimeBased);
                 this.endCall && this.endCall();
+            }
+            else {
+                card.prop_leftToRight(this.propData[this.propIndex].PropSort);
+                this.propIndex++;
             }
         }
         set propList_Mark(data) {
@@ -2081,8 +2193,8 @@
         }
     }
 
-    var Handler$2 = Laya.Handler;
-    var Tween$1 = Laya.Tween;
+    var Handler$3 = Laya.Handler;
+    var Tween$2 = Laya.Tween;
     class Prop extends ui.GameCommonUI.Athletics.PropUI {
         constructor() {
             super();
@@ -2090,16 +2202,16 @@
         }
         prop_leftToRight(number) {
             Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
-            Tween$1.to(this.card, { scaleX: 0 }, 150, null, Handler$2.create(this, () => {
+            Tween$2.to(this.card, { scaleX: 0 }, 150, null, Handler$3.create(this, () => {
                 this.prop_Number = number;
-                Tween$1.to(this.card, { scaleX: 1 }, 150);
+                Tween$2.to(this.card, { scaleX: 1 }, 150);
             }));
         }
         prop_topToDown(number) {
             Laya.SoundManager.playSound("GameCommon/sound/Games_Common_Sound_DealCard.mp3");
-            Tween$1.to(this.card, { scaleY: 0 }, 150, null, Handler$2.create(this, () => {
+            Tween$2.to(this.card, { scaleY: 0 }, 150, null, Handler$3.create(this, () => {
                 this.prop_Number = number;
-                Tween$1.to(this.card, { scaleY: 1 }, 150);
+                Tween$2.to(this.card, { scaleY: 1 }, 150);
             }));
         }
         set colour(data) {
@@ -2129,8 +2241,8 @@
         }
     }
 
-    var Handler$3 = Laya.Handler;
-    var Tween$2 = Laya.Tween;
+    var Handler$4 = Laya.Handler;
+    var Tween$3 = Laya.Tween;
     class Deal extends ui.GameCommonUI.Athletics.DealUI {
         constructor() {
             super();
@@ -2161,22 +2273,22 @@
         }
         dealToUser(card, user, speed = 300) {
             let pos = user.curDealPos;
-            Tween$2.to(card, { x: pos.x, y: pos.y }, speed, null, Handler$3.create(this, () => {
+            Tween$3.to(card, { x: pos.x, y: pos.y }, speed, null, Handler$4.create(this, () => {
                 user.recvCard(card.prop_Number);
                 card.removeSelf();
             }));
         }
     }
 
-    var Handler$4 = Laya.Handler;
+    var Handler$5 = Laya.Handler;
     class Bet extends ui.GameCommonUI.Athletics.BetUI {
         constructor() {
             super();
         }
         onAwake() {
             this.betBtn_list.selectEnable = true;
-            this.betBtn_list.selectHandler = new Handler$4(this, this.onSelect, null, false);
-            this.betBtn_list.renderHandler = new Handler$4(this, this.updateItem);
+            this.betBtn_list.selectHandler = new Handler$5(this, this.onSelect, null, false);
+            this.betBtn_list.renderHandler = new Handler$5(this, this.updateItem);
         }
         updateItem(cell, index) {
             cell.label = this.betBtn_list.array[index];
@@ -2186,15 +2298,15 @@
         }
     }
 
-    var Handler$5 = Laya.Handler;
+    var Handler$6 = Laya.Handler;
     class Rob extends ui.GameCommonUI.Athletics.RobUI {
         constructor() {
             super();
         }
         onAwake() {
             this.robBtn_list.selectEnable = true;
-            this.robBtn_list.selectHandler = new Handler$5(this, this.onSelect, null, false);
-            this.robBtn_list.renderHandler = new Handler$5(this, this.updateItem);
+            this.robBtn_list.selectHandler = new Handler$6(this, this.onSelect, null, false);
+            this.robBtn_list.renderHandler = new Handler$6(this, this.updateItem);
         }
         updateItem(cell, index) {
             cell.label = this.robBtn_list.array[index];
@@ -2204,8 +2316,8 @@
         }
     }
 
-    var Handler$6 = Laya.Handler;
-    var Tween$3 = Laya.Tween;
+    var Handler$7 = Laya.Handler;
+    var Tween$4 = Laya.Tween;
     class TransAni extends ui.GameCommonUI.Athletics.TansAniUI {
         constructor() {
             super();
@@ -2217,8 +2329,8 @@
             image && this.setImage(image);
             this.visible = true;
             this.image.x = this.width + this.image.width / 2;
-            Tween$3.to(this.image, { x: this.width / 2 }, 300, null, Handler$6.create(this, () => {
-                Tween$3.to(this.image, { x: -this.image.width / 2 }, 300, null, Handler$6.create(this, () => {
+            Tween$4.to(this.image, { x: this.width / 2 }, 300, null, Handler$7.create(this, () => {
+                Tween$4.to(this.image, { x: -this.image.width / 2 }, 300, null, Handler$7.create(this, () => {
                     this.visible = false;
                 }), 1000);
             }));
@@ -2320,28 +2432,6 @@
         }
     }
 
-    var Handler$7 = Laya.Handler;
-    var Tween$4 = Laya.Tween;
-    class Chip extends ui.GameCommonUI.Athletics.ChipUI {
-        constructor() {
-            super();
-        }
-        toTargerShow(target, compFunc) {
-            Tween$4.to(this, { x: target.x, y: target.y }, 300, null, Handler$7.create(this, () => {
-                Tween$4.to(this, { scaleX: 1.1, scaleY: 1.1 }, 300, null, Handler$7.create(this, () => {
-                    Tween$4.to(this, { scaleX: 1, scaleY: 1 }, 300, null, Handler$7.create(this, () => {
-                        compFunc && compFunc();
-                    }));
-                }));
-            }));
-        }
-        toTargerHide(target) {
-            Tween$4.to(this, { x: target.x, y: target.y }, 300, null, Handler$7.create(this, () => {
-                this.removeSelf();
-            }));
-        }
-    }
-
     var Event$3 = Laya.Event;
     class GoldenFlowerGame extends ui.GameAthleticsGoldenFlower.GameGoldenFlowerGameUI {
         constructor() {
@@ -2350,18 +2440,15 @@
         onAwake() {
             this.putChip_btn.on(Event$3.CLICK, this, () => {
                 let user = this[`user_${Math.floor(Math.random() * 6)}`];
-                this.userChip(user);
             });
             this.changeCoin_btn.on(Event$3.CLICK, this, () => {
                 let user1 = this[`user_${Math.floor(Math.random() * 6)}`];
                 let user2 = this[`user_${Math.floor(Math.random() * 6)}`];
                 let rand = Math.floor(Math.random() * 100);
                 for (let i = 0; i < rand; i++) {
-                    this.userChip(user1);
                 }
                 this.showText(user1, "-" + rand);
                 setTimeout(() => {
-                    this.chipUser(user2);
                     this.showText(user2, "+" + this.recv_panel.numChildren);
                 }, 1000);
             });
@@ -2372,19 +2459,6 @@
             text.x = user.pivotX;
             text.y = user.pivotY;
             text.startAni();
-        }
-        userChip(user) {
-            let chip = new Chip();
-            chip.x = user.x - this.recv_panel.x;
-            chip.y = user.y - this.recv_panel.y;
-            this.recv_panel.addChild(chip);
-            chip.toTargerShow(Base.publicFun.getRecvPos(this.recv_panel), null);
-        }
-        chipUser(user) {
-            let target = { x: user.x - this.recv_panel.x, y: user.y - this.recv_panel.y };
-            for (let i = 0; i < this.recv_panel.numChildren; i++) {
-                this.recv_panel.getChildAt(i).toTargerHide(target);
-            }
         }
     }
 

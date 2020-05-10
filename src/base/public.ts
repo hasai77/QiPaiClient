@@ -3,6 +3,7 @@ import Event = Laya.Event;
 import CommonPopup from "../Application/GameCommonUI/CommonPopup";
 import CommonTaost from "../Application/GameCommonUI/CommonToast";
 import FlutterText from "../Application/GameCommon/widget/FlutterText";
+import Chip from "../Application/GameCommon/widget/Chip";
 export default class PublicFun {
     constructor() {
 
@@ -14,6 +15,22 @@ export default class PublicFun {
         if (this.instance == null)
             this.instance = new PublicFun();
         return this.instance;
+    }
+
+    public userChip(user:Laya.Sprite,recvPanel:Laya.Sprite):Chip{
+        let chip = new Chip();
+        chip.x = user.x -recvPanel.x;
+        chip.y = user.y-recvPanel.y;
+        recvPanel.addChild(chip)
+        chip.toTargerShow(this.getRecvPos(recvPanel), null) 
+        return chip
+    }
+    public chipUser(user:Laya.Sprite,recvPanel:Laya.Sprite,start:number,end):void{
+        let target = {x:user.x -recvPanel.x,y:user.y-recvPanel.y}
+        console.log(recvPanel.numChildren,end)
+        for(let i = start;i<end;i++){
+            (<Chip>recvPanel.getChildAt(i)).toTargerHide(target)
+        }
     }
     public showText(target:Laya.Sprite,num:string):void{
         let text = new FlutterText(num);
@@ -139,8 +156,8 @@ export default class PublicFun {
         return { x, y }
     }
     public getMineIndex(list,mineId){
-        for(let i = 0;i<list.length,i++;){
-            if(list[i].id == mineId)
+        for(let i = 0;i<list.length;i++){
+            if(list[i].UserID == mineId)
                 return i;
         }
         return-1;

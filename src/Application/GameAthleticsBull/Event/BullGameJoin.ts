@@ -27,6 +27,7 @@ export default class BullGameJoin  extends GameEventModel{
     this.GameEventLeave.AddEventListener((data: any) => {
         console.log(data)
     })
+    this.RegisterListen()
 }
   // view(GameID:string,UserList:Array<UserInfoModel>,CurrentUser:UserInfoModel){
   //     for(let i = 0;i<this.ui.users.numChildren;i++)

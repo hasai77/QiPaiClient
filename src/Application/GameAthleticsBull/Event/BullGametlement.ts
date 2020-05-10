@@ -25,6 +25,7 @@ export default class BullGameSettlement  extends GameEventModel{
     this.GameEventLeave.AddEventListener((data: any) => {
         console.log(data)
     })
+    this.RegisterListen()
 }
   // view(GameID: string, GameUserList: Array<UserInfoModel>,ThanList:Array<UserInfoModel>){
   //        let minePos = base.publicFun.getMineIndex(GameUserList, base.userInfo.id)

@@ -10,19 +10,19 @@ export default class GoldenFlowerGame extends ui.GameAthleticsGoldenFlower.GameG
     onAwake() {
         this.putChip_btn.on(Event.CLICK, this, () => {
             let user = this[`user_${Math.floor(Math.random() * 6)}`]
-            this.userChip(user)
+         
         })
         this.changeCoin_btn.on(Event.CLICK, this, () => {
             let user1 = this[`user_${Math.floor(Math.random() * 6)}`]
             let user2 = this[`user_${Math.floor(Math.random() * 6)}`]
             let rand = Math.floor(Math.random()*100)
             for(let i = 0;i<rand;i++){
-                this.userChip(user1)
+              
                 
             }
             this.showText(user1, "-"+rand )
             setTimeout(() => {
-                this.chipUser(user2)
+             
                 this.showText(user2,"+"+this.recv_panel.numChildren )
             }, 1000);
         })
@@ -35,18 +35,5 @@ export default class GoldenFlowerGame extends ui.GameAthleticsGoldenFlower.GameG
         text.y = user.pivotY;
         text.startAni()
     }
-    public userChip(user:Laya.Sprite):void{
 
-        let chip = new Chip();
-        chip.x = user.x -this.recv_panel.x;
-        chip.y = user.y-this.recv_panel.y;
-        this.recv_panel.addChild(chip)
-        chip.toTargerShow(Base.publicFun.getRecvPos(this.recv_panel), null) 
-    }
-    public chipUser(user:Laya.Sprite):void{
-        let target = {x:user.x -this.recv_panel.x,y:user.y-this.recv_panel.y}
-        for(let i = 0;i<this.recv_panel.numChildren;i++){
-            (<Chip>this.recv_panel.getChildAt(i)).toTargerHide(target)
-        }
-    }
 }

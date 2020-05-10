@@ -56,6 +56,7 @@ export default class network {
             while(this.eList.length){
                 let msg = this.eList[0];
                 let name = msg.Name||msg.name
+                console.log(name)
                 if(this.types[name])
                 this.types[name](msg.Data);
                 else

@@ -21,18 +21,11 @@ export default class BullGameShowProp  extends GameEventModel{
         console.log(data)
     })
     this.GameEventEnter.AddEventListener((data: any) => {
-        console.log(data)
+      this.UI.hideBets()
     })
     this.GameEventLeave.AddEventListener((data: any) => {
         console.log(data)
     })
+    this.RegisterListen()
 }
-    // view(GameID:string,CurrentUser:UserInfoModel){
-    //   let UserList = []
-    //     let minePos = base.publicFun.getMineIndex(UserList,base.userInfo.id)
-    //     let otherPos =  base.publicFun.getMineIndex(UserList,CurrentUser.GetUserID())
-    //     let pos =  base.publicFun.getPUserPos(minePos,otherPos,UserList.length);
-    //     let user =   <UserPropList>this.ui.users.getChildAt(pos);
-    //     user.showProp(CurrentUser.PropList);
-    // }
 }

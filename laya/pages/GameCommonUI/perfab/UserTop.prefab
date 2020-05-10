@@ -142,7 +142,7 @@
             "x":15,
             "type":"Sprite",
             "searchKey":"Sprite,betNum_image",
-            "props":{"y":231,"x":48,"visible":false,"texture":"GameCommon/BetNumber/Game_Common_Bet_10.png","presetPre":"laya/pages/GameCommonUI/perfab/UserLeft.prefab","presetIDPre":12,"presetID":12,"preset":"laya/pages/GameCommonUI/perfab/UserTop.prefab","name":"betNum_image"},
+            "props":{"y":231,"x":56,"visible":false,"texture":"GameCommon/BetNumber/Game_Common_Bet_10.png","presetPre":"laya/pages/GameCommonUI/perfab/UserLeft.prefab","presetIDPre":12,"presetID":12,"preset":"laya/pages/GameCommonUI/perfab/UserTop.prefab","name":"betNum_image"},
             "nodeParent":13,
             "label":"betNum_image",
             "isDirectory":false,

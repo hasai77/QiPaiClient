@@ -68,6 +68,7 @@ export module ui.Common {
 export module ui.GameAthleticsBull {
     export class BullGameUI extends Laya.Scene {
 		public users:Laya.Sprite;
+		public recv_panel:Laya.Sprite;
 		public deal_view:any;
 		public bet_view:any;
 		public rob_view:any;

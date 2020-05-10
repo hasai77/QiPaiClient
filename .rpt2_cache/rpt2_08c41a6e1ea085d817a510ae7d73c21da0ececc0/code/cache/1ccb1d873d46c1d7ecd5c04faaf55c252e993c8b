@@ -1,0 +1,9 @@
+{
+  "code": "import { ui } from \"../../ui/layaMaxUI\";\r\nvar Event = Laya.Event;\r\nimport FlutterText from \"../GameCommon/widget/FlutterText\";\r\nexport default class GoldenFlowerGame extends ui.GameAthleticsGoldenFlower.GameGoldenFlowerGameUI {\r\n    constructor() {\r\n        super();\r\n    }\r\n    onAwake() {\r\n        this.putChip_btn.on(Event.CLICK, this, () => {\r\n            let user = this[`user_${Math.floor(Math.random() * 6)}`];\r\n        });\r\n        this.changeCoin_btn.on(Event.CLICK, this, () => {\r\n            let user1 = this[`user_${Math.floor(Math.random() * 6)}`];\r\n            let user2 = this[`user_${Math.floor(Math.random() * 6)}`];\r\n            let rand = Math.floor(Math.random() * 100);\r\n            for (let i = 0; i < rand; i++) {\r\n            }\r\n            this.showText(user1, \"-\" + rand);\r\n            setTimeout(() => {\r\n                this.showText(user2, \"+\" + this.recv_panel.numChildren);\r\n            }, 1000);\r\n        });\r\n    }\r\n    showText(user, num) {\r\n        let text = new FlutterText(num);\r\n        user.addChild(text);\r\n        text.x = user.pivotX;\r\n        text.y = user.pivotY;\r\n        text.startAni();\r\n    }\r\n}\r\n",
+  "references": [
+    "C:/Users/Administrator/Documents/QiPaiClient/src/ui/layaMaxUI.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/base/base.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameCommon/widget/Chip.ts",
+    "C:/Users/Administrator/Documents/QiPaiClient/src/Application/GameCommon/widget/FlutterText.ts"
+  ]
+}

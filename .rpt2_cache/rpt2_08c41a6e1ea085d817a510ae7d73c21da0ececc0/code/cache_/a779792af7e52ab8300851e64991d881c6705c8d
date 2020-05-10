@@ -1,6 +1,0 @@
-{
-  "code": "import network from \"./network\";\r\nexport default class SnedNet {\r\n    constructor() {\r\n        this.netWork = network.getinstance();\r\n    }\r\n    static getinstance() {\r\n        if (this.instance == null)\r\n            this.instance = new SnedNet();\r\n        return this.instance;\r\n    }\r\n    sendCreatGame(data) {\r\n        this.netWork.sendMsg(\"GameCommon/CreateGame\", data);\r\n    }\r\n    sendJoinRoom(data) {\r\n        this.netWork.sendMsg(\"GameCommon/GameAction\", data);\r\n    }\r\n    sendAthleticsAddDeal(data) {\r\n        this.netWork.sendMsg(\"GameCommon.GameAction.Athletics.AddDeal.request\", data);\r\n    }\r\n}\r\n",
-  "references": [
-    "C:/Users/Administrator/Documents/QiPaiClient/src/base/network.ts"
-  ]
-}

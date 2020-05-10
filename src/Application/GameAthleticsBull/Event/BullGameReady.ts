@@ -25,6 +25,7 @@ export default class BullGameReady  extends GameEventModel{
     this.GameEventLeave.AddEventListener((data: any) => {
         console.log(data)
     })
+    this.RegisterListen()
 }
 
 }
